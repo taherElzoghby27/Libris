@@ -7,8 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(schema = "library")
+@Table(schema = "library", name = "role_entity")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -17,6 +20,9 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, unique = true)
     @Enumerated(EnumType.STRING)
     private RoleType role;
+    @ManyToMany(mappedBy = "roles")
+    private List<UserSystem> users = new ArrayList<>();
 }

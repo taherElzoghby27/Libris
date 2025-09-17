@@ -1,15 +1,22 @@
 package com.spring.boot.librarymanagementsystem.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(schema = "library")
+@Table(
+        schema = "library",
+        indexes = {
+                @Index(name = "idx_user_username", columnList = "username"),
+                @Index(name = "idx_user_email", columnList = "email")
+        }
+)
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -17,10 +24,21 @@ import lombok.Setter;
 public class UserSystem extends BaseEntity<String> {
     @Column(unique = true, nullable = false)
     private String username;
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false)
     private String password;
     private String fullName;
     @Column(unique = true, nullable = false)
     private String email;
-    private Long enabled = 1L;
+    private Boolean enabled = true;
+    @ManyToMany
+    @JoinTable(
+            schema = "library",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"),
+            uniqueConstraints = @UniqueConstraint(
+                    columnNames = {"user_id", "role_id"}
+            )
+    )
+    private List<Role> roles = new ArrayList<>();
+
 }
