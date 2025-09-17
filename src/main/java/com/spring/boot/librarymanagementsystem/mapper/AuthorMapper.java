@@ -1,0 +1,15 @@
+package com.spring.boot.librarymanagementsystem.mapper;
+
+import com.spring.boot.librarymanagementsystem.dto.AuthorDto;
+import com.spring.boot.librarymanagementsystem.entity.Author;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
+@Mapper
+public interface AuthorMapper {
+    AuthorMapper INSTANCE = Mappers.getMapper(AuthorMapper.class);
+
+    AuthorDto toAuthorDto(Author author);
+
+    Author toAuthor(AuthorDto authorDto);
+}
