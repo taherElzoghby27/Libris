@@ -14,4 +14,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Publisher extends BaseEntity<String> {
+    private String name;
+    private String address;
 }

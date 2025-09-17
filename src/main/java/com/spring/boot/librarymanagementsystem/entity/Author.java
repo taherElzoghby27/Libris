@@ -14,4 +14,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Author extends BaseEntity<String> {
+    private String firstName;
+    private String lastName;
+    private String bio;
 }
