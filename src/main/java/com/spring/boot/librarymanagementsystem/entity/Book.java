@@ -14,4 +14,5 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Book extends BaseEntity<String> {
+
 }
