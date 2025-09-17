@@ -1,7 +1,7 @@
 package com.spring.boot.librarymanagementsystem.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.spring.boot.librarymanagementsystem.utils.RoleType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,5 +13,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Role extends BaseEntity<String> {
+public class Role {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Enumerated(EnumType.STRING)
+    private RoleType role;
 }
