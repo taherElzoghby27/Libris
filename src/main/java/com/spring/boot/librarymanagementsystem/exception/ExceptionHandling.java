@@ -1,7 +1,6 @@
 package com.spring.boot.librarymanagementsystem.exception;
 
 import com.spring.boot.librarymanagementsystem.dto.ExceptionDto;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 @ControllerAdvice
-@Slf4j
 public class ExceptionHandling {
 
 
@@ -130,7 +128,6 @@ public class ExceptionHandling {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionDto> handleGeneralException(Exception exception) {
-        log.error("Unexpected error : ", exception);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                 new ExceptionDto(
                         500,
