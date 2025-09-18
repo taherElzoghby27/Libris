@@ -1,5 +1,6 @@
 package com.spring.boot.librarymanagementsystem.vm;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public class UserSystemSignUpVm {
     private String password;
     @NotEmpty(message = "full name must be not empty")
     private String fullName;
+    @Email(message = "email format")
     @NotEmpty(message = "email must be not empty")
     private String email;
 }

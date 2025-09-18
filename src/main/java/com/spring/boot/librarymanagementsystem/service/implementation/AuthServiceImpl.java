@@ -2,8 +2,8 @@ package com.spring.boot.librarymanagementsystem.service.implementation;
 
 import com.spring.boot.librarymanagementsystem.config.security.TokenHandler;
 import com.spring.boot.librarymanagementsystem.dto.UserSystemDto;
-import com.spring.boot.librarymanagementsystem.exception.InvalidCredentialsException;
-import com.spring.boot.librarymanagementsystem.exception.NotFoundResourceException;
+import com.spring.boot.librarymanagementsystem.exception.custom_exception.InvalidCredentialsException;
+import com.spring.boot.librarymanagementsystem.exception.custom_exception.NotFoundResourceException;
 import com.spring.boot.librarymanagementsystem.mapper.UserMapper;
 import com.spring.boot.librarymanagementsystem.service.AuthService;
 import com.spring.boot.librarymanagementsystem.service.UserService;

@@ -1,6 +1,10 @@
 package com.spring.boot.librarymanagementsystem.exception;
 
 import com.spring.boot.librarymanagementsystem.dto.ExceptionDto;
+import com.spring.boot.librarymanagementsystem.exception.custom_exception.BadRequestException;
+import com.spring.boot.librarymanagementsystem.exception.custom_exception.ExpiredTokenException;
+import com.spring.boot.librarymanagementsystem.exception.custom_exception.InvalidCredentialsException;
+import com.spring.boot.librarymanagementsystem.exception.custom_exception.NotFoundResourceException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
@@ -12,11 +16,13 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.TransactionSystemException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+
 @ControllerAdvice
 public class ExceptionHandling {
 
@@ -118,10 +124,12 @@ public class ExceptionHandling {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionDto> handleValidationException(MethodArgumentNotValidException exception) {
+        FieldError fieldError = exception.getBindingResult().getFieldErrors().get(0);
+        String error = fieldError.getDefaultMessage();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 new ExceptionDto(
                         HttpStatus.BAD_REQUEST.value(),
-                        exception.getMessage()
+                        error
                 )
         );
     }

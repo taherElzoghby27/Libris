@@ -2,8 +2,8 @@ package com.spring.boot.librarymanagementsystem.service.implementation;
 
 import com.spring.boot.librarymanagementsystem.dto.AuthorDto;
 import com.spring.boot.librarymanagementsystem.entity.Author;
-import com.spring.boot.librarymanagementsystem.exception.BadRequestException;
-import com.spring.boot.librarymanagementsystem.exception.NotFoundResourceException;
+import com.spring.boot.librarymanagementsystem.exception.custom_exception.BadRequestException;
+import com.spring.boot.librarymanagementsystem.exception.custom_exception.NotFoundResourceException;
 import com.spring.boot.librarymanagementsystem.mapper.AuthorMapper;
 import com.spring.boot.librarymanagementsystem.repository.AuthorRepo;
 import com.spring.boot.librarymanagementsystem.service.AuthorService;
@@ -11,7 +11,6 @@ import com.spring.boot.librarymanagementsystem.service.PaginationService;
 import com.spring.boot.librarymanagementsystem.vm.AuthorResponseVm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package com.spring.boot.librarymanagementsystem.config.security;
 
 import com.spring.boot.librarymanagementsystem.dto.UserSystemDto;
-import com.spring.boot.librarymanagementsystem.exception.ExpiredTokenException;
+import com.spring.boot.librarymanagementsystem.exception.custom_exception.ExpiredTokenException;
 import com.spring.boot.librarymanagementsystem.service.UserService;
 import com.spring.boot.librarymanagementsystem.setting.JWTToken;
 import io.jsonwebtoken.Claims;

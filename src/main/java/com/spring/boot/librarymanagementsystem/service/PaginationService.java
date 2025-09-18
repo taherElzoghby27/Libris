@@ -1,6 +1,6 @@
 package com.spring.boot.librarymanagementsystem.service;
 
-import com.spring.boot.librarymanagementsystem.exception.BadRequestException;
+import com.spring.boot.librarymanagementsystem.exception.custom_exception.BadRequestException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
