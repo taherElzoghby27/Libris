@@ -1,6 +1,7 @@
 package com.spring.boot.librarymanagementsystem.service;
 
 import com.spring.boot.librarymanagementsystem.dto.UserSystemDto;
+import com.spring.boot.librarymanagementsystem.vm.UserSystemRequestVm;
 import com.spring.boot.librarymanagementsystem.vm.UsersResponseVm;
 
 public interface UserService {
@@ -9,4 +10,12 @@ public interface UserService {
     UserSystemDto getUserByEmail(String email);
 
     UserSystemDto getUserByUsername(String username);
+
+    UserSystemDto getUserById(Long id);
+
+    UserSystemDto createUserSystem(UserSystemRequestVm userSystemRequestVm);
+
+    UserSystemDto updateUserSystem(UserSystemRequestVm userSystemRequestVm);
+
+    void deleteUserSystem(Long id);
 }
