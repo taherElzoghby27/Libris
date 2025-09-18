@@ -33,7 +33,7 @@ public class UserSystem extends BaseEntity<String> {
     private Boolean enabled = true;
     @ManyToMany
     @JoinTable(
-            schema = "library",
+            schema = "LIBRARY_SYSTEM",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"),
             uniqueConstraints = @UniqueConstraint(

@@ -1,6 +1,6 @@
 package com.spring.boot.librarymanagementsystem.config.aware;
 
-import com.spring.boot.librarymanagementsystem.dto.UserDto;
+import com.spring.boot.librarymanagementsystem.dto.UserSystemDto;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +15,7 @@ public class AuditorAwareImpl implements AuditorAware<String> {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         // Check if user is authenticated and principal is AccountDto
-        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDto acc) {
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserSystemDto acc) {
 
             return Optional.ofNullable(acc.getUsername());
         }

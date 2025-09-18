@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-public class UserDto {
+public class UserSystemDto {
     private Long id;
     @NotEmpty(message = "username must be not empty")
     private String username;

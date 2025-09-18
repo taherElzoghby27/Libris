@@ -1,6 +1,6 @@
 package com.spring.boot.librarymanagementsystem.mapper;
 
-import com.spring.boot.librarymanagementsystem.dto.UserDto;
+import com.spring.boot.librarymanagementsystem.dto.UserSystemDto;
 import com.spring.boot.librarymanagementsystem.entity.UserSystem;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -9,8 +9,8 @@ import org.mapstruct.factory.Mappers;
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    UserDto toUserDto(UserSystem user);
+    UserSystemDto toUserDto(UserSystem user);
 
-    UserSystem toUserSystem(UserDto userDto);
+    UserSystem toUserSystem(UserSystemDto userSystemDto);
 
 }

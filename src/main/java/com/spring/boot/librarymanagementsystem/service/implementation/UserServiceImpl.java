@@ -1,6 +1,6 @@
 package com.spring.boot.librarymanagementsystem.service.implementation;
 
-import com.spring.boot.librarymanagementsystem.dto.UserDto;
+import com.spring.boot.librarymanagementsystem.dto.UserSystemDto;
 import com.spring.boot.librarymanagementsystem.entity.UserSystem;
 import com.spring.boot.librarymanagementsystem.exception.BadRequestException;
 import com.spring.boot.librarymanagementsystem.exception.NotFoundResourceException;
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserByEmail(String email) {
+    public UserSystemDto getUserByEmail(String email) {
         if (Objects.isNull(email)) {
             throw new BadRequestException("email must be not null");
         }
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserByUsername(String username) {
+    public UserSystemDto getUserByUsername(String username) {
         if (Objects.isNull(username)) {
             throw new BadRequestException("username must be not null");
         }

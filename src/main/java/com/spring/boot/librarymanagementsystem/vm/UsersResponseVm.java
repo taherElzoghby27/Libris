@@ -1,6 +1,6 @@
 package com.spring.boot.librarymanagementsystem.vm;
 
-import com.spring.boot.librarymanagementsystem.dto.UserDto;
+import com.spring.boot.librarymanagementsystem.dto.UserSystemDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +13,6 @@ import java.util.List;
 @Setter
 @Getter
 public class UsersResponseVm {
-    private List<UserDto> users;
+    private List<UserSystemDto> users;
     private Long size;
 }

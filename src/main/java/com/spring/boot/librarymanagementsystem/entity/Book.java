@@ -41,7 +41,7 @@ public class Book extends BaseEntity<String> {
     private Publisher publisher;
     @ManyToMany
     @JoinTable(
-            schema = "library",
+            schema = "LIBRARY_SYSTEM",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"),
             uniqueConstraints = @UniqueConstraint(columnNames = {"book_id", "author_id"})

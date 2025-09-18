@@ -1,6 +1,6 @@
 package com.spring.boot.librarymanagementsystem.config.security;
 
-import com.spring.boot.librarymanagementsystem.dto.UserDto;
+import com.spring.boot.librarymanagementsystem.dto.UserSystemDto;
 import com.spring.boot.librarymanagementsystem.exception.ExpiredTokenException;
 import com.spring.boot.librarymanagementsystem.service.UserService;
 import com.spring.boot.librarymanagementsystem.setting.JWTToken;
@@ -36,8 +36,8 @@ public class TokenHandler {
     }
 
     //generate token method
-    public String generateToken(UserDto userDto) {
-        this.jwtBuilder.setSubject(userDto.getUsername());
+    public String generateToken(UserSystemDto userSystemDto) {
+        this.jwtBuilder.setSubject(userSystemDto.getUsername());
         Date now = new Date();
         this.jwtBuilder.setIssuedAt(now);
         this.jwtBuilder.setExpiration(createExpirationDate(now));
@@ -45,16 +45,16 @@ public class TokenHandler {
     }
 
     //validate token
-    public UserDto validateToken(String token) {
+    public UserSystemDto validateToken(String token) {
         try {
             if (this.jwtParser.isSigned(token)) {
                 Claims claims = this.jwtParser.parseClaimsJws(token).getBody();
                 String username = claims.getSubject();
                 Date expirationDate = claims.getExpiration();
                 Date issuedDate = claims.getIssuedAt();
-                UserDto userDto = userService.getUserByUsername(username);
-                boolean valid = expirationDate.after(new Date()) && issuedDate.before(expirationDate) && Objects.nonNull(userDto);
-                return valid ? userDto : null;
+                UserSystemDto userSystemDto = userService.getUserByUsername(username);
+                boolean valid = expirationDate.after(new Date()) && issuedDate.before(expirationDate) && Objects.nonNull(userSystemDto);
+                return valid ? userSystemDto : null;
             }
         } catch (Exception e) {
             throw new ExpiredTokenException(e.getMessage());

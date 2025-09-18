@@ -1,12 +1,12 @@
 package com.spring.boot.librarymanagementsystem.config.security;
 
-import com.spring.boot.librarymanagementsystem.dto.UserDto;
+
+import com.spring.boot.librarymanagementsystem.dto.UserSystemDto;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,7 +34,7 @@ public class AuthFilter extends OncePerRequestFilter {
             }
             token = token.substring(7);
             //3- validate token
-            UserDto userValidated = null;
+            UserSystemDto userValidated = null;
             userValidated = tokenHandler.validateToken(token);
             if (Objects.isNull(userValidated) || !userValidated.getEnabled()) {
                 response.reset();
