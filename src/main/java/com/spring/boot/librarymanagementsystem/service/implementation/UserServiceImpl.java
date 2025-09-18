@@ -142,4 +142,23 @@ public class UserServiceImpl implements UserService {
         userRepo.deleteById(id);
     }
 
+    @Override
+    public UserSystemDto updateRolesForUserSystem(Long userId, RoleDto roleDto) {
+        if (Objects.isNull(userId)) {
+            throw new BadRequestException("user id must be not null");
+        }
+        UserSystemDto userSystemDto = getUserById(userId);
+        roleDto = roleService.getRoleByName(roleDto.getRole().toString());
+        //user system dto to user system
+        UserSystem userSystem = UserMapper.INSTANCE.toUserSystem(userSystemDto);
+        //role dto to role
+        Role role = RoleMapper.INSTANCE.toRole(roleDto);
+        //get roles for this user
+        List<Role> roles = userSystem.getRoles();
+        roles.add(role);
+        userSystem.setRoles(roles);
+        userSystem = userRepo.save(userSystem);
+        return UserMapper.INSTANCE.toUserDto(userSystem);
+    }
+
 }
