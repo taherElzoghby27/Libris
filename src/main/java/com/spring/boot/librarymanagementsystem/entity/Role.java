@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(schema = "library", name = "role_entity")
+@Table(schema = "LIBRARY_SYSTEM", name = "role_entity")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter

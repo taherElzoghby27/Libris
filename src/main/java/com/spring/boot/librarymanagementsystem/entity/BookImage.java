@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(schema = "library")
+@Table(schema = "LIBRARY_SYSTEM")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter

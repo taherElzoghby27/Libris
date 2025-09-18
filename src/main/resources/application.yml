@@ -2,8 +2,8 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
-    user: LIBRARY
-    password: LIBRARY
+    user: LIBRARY_SYSTEM
+    password: LIBRARY_SYSTEM
     url: jdbc:oracle:thin:@//localhost:1521/orcl
     driver-class-name: oracle.jdbc.OracleDriver
   application:
@@ -11,14 +11,14 @@ spring:
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@//localhost:1521/orcl
-    username: LIBRARY
-    password: LIBRARY
+    username: LIBRARY_SYSTEM
+    password: LIBRARY_SYSTEM
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
 server:
-  port: 6060
+  port: 9090
 
 token:
   secret: 832t82eg8dgwd2fc8cg2bfg663fd6bftg8oe8g2e8hihrfghe87drf

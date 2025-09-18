@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(
-        schema = "library",
+        schema = "LIBRARY_SYSTEM",
         indexes = {
                 @Index(name = "idx_category_name", columnList = "name")
         }

@@ -13,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(
-        schema = "library",
+        schema = "LIBRARY_SYSTEM",
         indexes = {
                 @Index(name = "idx_member_email", columnList = "email"),
                 @Index(name = "idx_member_phone", columnList = "phone")

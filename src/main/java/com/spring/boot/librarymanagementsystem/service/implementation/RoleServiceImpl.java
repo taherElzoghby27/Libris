@@ -20,7 +20,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDto getRoleByName(String role) {
         RoleType roleType = RoleType.valueOf(role);
-        Role roleResult = roleRepo.findByRoleName(roleType.name());
+        Role roleResult = roleRepo.findByRole(roleType.name());
         if (Objects.isNull(roleResult)) {
             throw new NotFoundResourceException("Role not found");
         }
