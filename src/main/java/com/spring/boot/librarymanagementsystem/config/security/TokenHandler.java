@@ -1,4 +1,5 @@
 package com.spring.boot.librarymanagementsystem.config.security;
+
 import com.spring.boot.librarymanagementsystem.dto.UserDto;
 import com.spring.boot.librarymanagementsystem.exception.ExpiredTokenException;
 import com.spring.boot.librarymanagementsystem.service.UserService;
@@ -19,10 +20,10 @@ import java.util.Objects;
 
 @Component
 public class TokenHandler {
-    private String secret;
-    private Duration time;
-    private JwtBuilder jwtBuilder;
-    private JwtParser jwtParser;
+    private final String secret;
+    private final Duration time;
+    private final JwtBuilder jwtBuilder;
+    private final JwtParser jwtParser;
     @Autowired
     private UserService userService;
 
