@@ -6,7 +6,6 @@ import com.spring.boot.librarymanagementsystem.vm.CategoryRequestVm;
 import com.spring.boot.librarymanagementsystem.vm.CategoryResponseVm;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
@@ -18,13 +17,7 @@ public interface CategoryMapper {
 
     Category toCategory(CategoryDto categoryDto);
 
-    @Mapping(source = "parent", target = "parent", qualifiedByName = "categoryToId")
     CategoryDto toCategoryDto(Category category);
 
     CategoryResponseVm toCategoryResponseVm(Category category);
-
-    @Named("categoryToId")
-    default Long categoryToId(Category category) {
-        return category.getId() == null ? null : category.getId();
-    }
 }
