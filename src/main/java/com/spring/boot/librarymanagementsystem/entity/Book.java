@@ -33,7 +33,7 @@ public class Book extends BaseEntity<String> {
     private String isbn;
     @Column(nullable = false)
     private String edition;
-    @Column(nullable = false)
+    @Column
     @OneToMany(mappedBy = "book")
     private List<BookImage> coverImages = new ArrayList<>();
     @JoinColumn(nullable = false)

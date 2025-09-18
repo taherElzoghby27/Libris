@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(
@@ -23,7 +21,7 @@ import java.util.List;
 @Setter
 @Getter
 public class Borrowing extends BaseEntity<String> {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Book books;
     @ManyToOne(fetch = FetchType.LAZY)
