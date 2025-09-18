@@ -31,7 +31,7 @@ public class UserSystem extends BaseEntity<String> {
     @Column(unique = true, nullable = false)
     private String email;
     private Boolean enabled = true;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             schema = "LIBRARY_SYSTEM",
             joinColumns = @JoinColumn(name = "user_id"),
