@@ -1,5 +1,6 @@
 package com.spring.boot.librarymanagementsystem.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,5 +23,7 @@ public class UserDto {
     private String fullName;
     @NotEmpty(message = "email must be not empty")
     private String email;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Boolean enabled = true;
     private List<RoleDto> roles;
 }

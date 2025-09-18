@@ -1,5 +1,6 @@
 package com.spring.boot.librarymanagementsystem.config.security;
 
+import com.spring.boot.librarymanagementsystem.dto.UserDto;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ public class AuthFilter extends OncePerRequestFilter {
     private final TokenHandler tokenHandler;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
         try {
             //1- get token from headers
             String token = request.getHeader("Authorization");
@@ -34,9 +35,9 @@ public class AuthFilter extends OncePerRequestFilter {
             }
             token = token.substring(7);
             //3- validate token
-            AccountDto userValidated = null;
+            UserDto userValidated = null;
             userValidated = tokenHandler.validateToken(token);
-            if (Objects.isNull(userValidated) || userValidated.getEnabled().equals("0")) {
+            if (Objects.isNull(userValidated) || !userValidated.getEnabled()) {
                 response.reset();
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return;

@@ -1,8 +1,9 @@
 package com.spring.boot.librarymanagementsystem.config.security;
-
-
+import com.spring.boot.librarymanagementsystem.dto.UserDto;
 import com.spring.boot.librarymanagementsystem.exception.ExpiredTokenException;
+import com.spring.boot.librarymanagementsystem.service.UserService;
 import com.spring.boot.librarymanagementsystem.setting.JWTToken;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
@@ -14,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.time.Duration;
 import java.util.Date;
+import java.util.Objects;
 
 @Component
 public class TokenHandler {
@@ -22,7 +24,7 @@ public class TokenHandler {
     private JwtBuilder jwtBuilder;
     private JwtParser jwtParser;
     @Autowired
-    private AccountService accountService;
+    private UserService userService;
 
     public TokenHandler(JWTToken jwtToken) {
         this.secret = jwtToken.getSecret();
@@ -33,26 +35,25 @@ public class TokenHandler {
     }
 
     //generate token method
-    public String generateToken(AccountDto accountDto) {
-        this.jwtBuilder.setSubject(accountDto.getUsername());
+    public String generateToken(UserDto userDto) {
+        this.jwtBuilder.setSubject(userDto.getUsername());
         Date now = new Date();
         this.jwtBuilder.setIssuedAt(now);
         this.jwtBuilder.setExpiration(createExpirationDate(now));
-        //this.jwtBuilder.claim("phoneNumber", accountDto.getUserDetailsDto().getPhoneNumber());
         return this.jwtBuilder.compact();
     }
 
     //validate token
-    public AccountDto validateToken(String token) {
+    public UserDto validateToken(String token) {
         try {
             if (this.jwtParser.isSigned(token)) {
                 Claims claims = this.jwtParser.parseClaimsJws(token).getBody();
                 String username = claims.getSubject();
                 Date expirationDate = claims.getExpiration();
                 Date issuedDate = claims.getIssuedAt();
-                AccountDto accountDto = accountService.getAccountByUsername(username);
-                boolean valid = expirationDate.after(new Date()) && issuedDate.before(expirationDate) && Objects.nonNull(accountDto);
-                return valid ? accountDto : null;
+                UserDto userDto = userService.getUserByUsername(username);
+                boolean valid = expirationDate.after(new Date()) && issuedDate.before(expirationDate) && Objects.nonNull(userDto);
+                return valid ? userDto : null;
             }
         } catch (Exception e) {
             throw new ExpiredTokenException(e.getMessage());
