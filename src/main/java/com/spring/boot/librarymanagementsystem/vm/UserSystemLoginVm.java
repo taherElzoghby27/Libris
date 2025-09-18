@@ -1,0 +1,18 @@
+package com.spring.boot.librarymanagementsystem.vm;
+
+import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+public class UserSystemLoginVm {
+    @NotEmpty(message = "email must be not empty")
+    private String email;
+    @NotEmpty(message = "password must be not empty")
+    private String password;
+}

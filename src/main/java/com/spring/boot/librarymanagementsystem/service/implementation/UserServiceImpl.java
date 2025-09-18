@@ -13,7 +13,7 @@ import com.spring.boot.librarymanagementsystem.service.PaginationService;
 import com.spring.boot.librarymanagementsystem.service.RoleService;
 import com.spring.boot.librarymanagementsystem.service.UserService;
 import com.spring.boot.librarymanagementsystem.utils.RoleType;
-import com.spring.boot.librarymanagementsystem.vm.UserSystemRequestVm;
+import com.spring.boot.librarymanagementsystem.vm.UserSystemSignUpVm;
 import com.spring.boot.librarymanagementsystem.vm.UsersResponseVm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -84,11 +84,11 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserSystemDto createUserSystem(UserSystemRequestVm userSystemRequestVm) {
-        if (Objects.nonNull(userSystemRequestVm.getId())) {
+    public UserSystemDto createUserSystem(UserSystemSignUpVm userSystemSignUpVm) {
+        if (Objects.nonNull(userSystemSignUpVm.getId())) {
             throw new BadRequestException("id must be null");
         }
-        UserSystem userSystem = UserMapper.INSTANCE.toUserSystem(userSystemRequestVm);
+        UserSystem userSystem = UserMapper.INSTANCE.toUserSystem(userSystemSignUpVm);
         userSystem.setPassword(passwordEncoder.encode(userSystem.getPassword()));
         //check role if exist
         Role role = getDefaultRole();
@@ -103,27 +103,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserSystemDto updateUserSystem(UserSystemRequestVm userSystemRequestVm) {
+    public UserSystemDto updateUserSystem(UserSystemSignUpVm userSystemSignUpVm) {
         boolean update = false;
-        if (Objects.isNull(userSystemRequestVm.getId())) {
+        if (Objects.isNull(userSystemSignUpVm.getId())) {
             throw new BadRequestException("id must be not null");
         }
-        UserSystemDto userSystemDto = getUserById(userSystemRequestVm.getId());
-        if (!userSystemDto.getUsername().equals(userSystemRequestVm.getUsername())) {
+        UserSystemDto userSystemDto = getUserById(userSystemSignUpVm.getId());
+        if (!userSystemDto.getUsername().equals(userSystemSignUpVm.getUsername())) {
             update = true;
-            userSystemDto.setUsername(userSystemRequestVm.getUsername());
+            userSystemDto.setUsername(userSystemSignUpVm.getUsername());
         }
-        if (!userSystemDto.getPassword().equals(userSystemRequestVm.getPassword())) {
+        if (!userSystemDto.getPassword().equals(userSystemSignUpVm.getPassword())) {
             update = true;
-            userSystemDto.setPassword(userSystemRequestVm.getPassword());
+            userSystemDto.setPassword(userSystemSignUpVm.getPassword());
         }
-        if (!userSystemDto.getEmail().equals(userSystemRequestVm.getEmail())) {
+        if (!userSystemDto.getEmail().equals(userSystemSignUpVm.getEmail())) {
             update = true;
-            userSystemDto.setEmail(userSystemRequestVm.getEmail());
+            userSystemDto.setEmail(userSystemSignUpVm.getEmail());
         }
-        if (!userSystemDto.getFullName().equals(userSystemRequestVm.getFullName())) {
+        if (!userSystemDto.getFullName().equals(userSystemSignUpVm.getFullName())) {
             update = true;
-            userSystemDto.setFullName(userSystemRequestVm.getFullName());
+            userSystemDto.setFullName(userSystemSignUpVm.getFullName());
         }
         if (!update) {
             throw new NotFoundResourceException("data must be different");

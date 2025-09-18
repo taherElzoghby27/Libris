@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class UserSystemRequestVm {
+public class UserSystemSignUpVm {
     private Long id;
     @NotEmpty(message = "username must be not empty")
     private String username;
