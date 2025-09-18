@@ -26,6 +26,7 @@ public class UserSystem extends BaseEntity<String> {
     private String username;
     @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String fullName;
     @Column(unique = true, nullable = false)
     private String email;
