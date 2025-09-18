@@ -4,7 +4,7 @@ import com.spring.boot.librarymanagementsystem.dto.UserDto;
 import com.spring.boot.librarymanagementsystem.vm.UsersResponseVm;
 
 public interface UserService {
-    UsersResponseVm getUsers();
+    UsersResponseVm getUsers(int page, int size);
 
     UserDto getUserByEmail(String email);
 

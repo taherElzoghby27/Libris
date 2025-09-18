@@ -7,6 +7,7 @@ import com.spring.boot.librarymanagementsystem.exception.NotFoundResourceExcepti
 import com.spring.boot.librarymanagementsystem.mapper.AuthorMapper;
 import com.spring.boot.librarymanagementsystem.repository.AuthorRepo;
 import com.spring.boot.librarymanagementsystem.service.AuthorService;
+import com.spring.boot.librarymanagementsystem.service.PaginationService;
 import com.spring.boot.librarymanagementsystem.vm.AuthorResponseVm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,7 +25,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public AuthorResponseVm getAuthors(int page, int size) {
-        Pageable pageable = getPageable(page, size);
+        Pageable pageable = PaginationService.getPageable(page, size);
         Page<Author> result = authorRepo.findAll(pageable);
         if (result.isEmpty()) {
             throw new NotFoundResourceException("authors not found");
@@ -75,12 +76,5 @@ public class AuthorServiceImpl implements AuthorService {
         }
         getAuthor(id);
         authorRepo.deleteById(id);
-    }
-
-    private static Pageable getPageable(int page, int size) {
-        if (page < 1) {
-            throw new BadRequestException("page must be greater than 0");
-        }
-        return PageRequest.of(page - 1, size);
     }
 }
