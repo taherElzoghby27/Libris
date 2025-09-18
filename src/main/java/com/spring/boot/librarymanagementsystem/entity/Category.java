@@ -23,7 +23,7 @@ import java.util.List;
 public class Category extends BaseEntity<String> {
     @Column(nullable = false, unique = true)
     private String name;
-    @JoinColumn(unique = true)
+    @JoinColumn(name = "parent_id", foreignKey = @ForeignKey(name = "fk_category_parent"))
     @ManyToOne
     private Category parent;
     @OneToMany(mappedBy = "category")

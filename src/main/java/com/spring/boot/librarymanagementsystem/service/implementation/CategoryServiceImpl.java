@@ -11,6 +11,7 @@ import com.spring.boot.librarymanagementsystem.vm.CategoryRequestVm;
 import com.spring.boot.librarymanagementsystem.vm.CategoryResponseVm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.List;
@@ -27,7 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
         Category category = CategoryMapper.INSTANCE.toCategory(categoryRequestVm);
         CategoryDto parentDto = null;
-        if (Objects.nonNull(categoryRequestVm.getParent()) && !Objects.equals(categoryRequestVm.getId(), category.getId())) {
+        if (Objects.nonNull(categoryRequestVm.getParent()) && !Objects.equals(categoryRequestVm.getParent(), category.getId())) {
             parentDto = getCategory(categoryRequestVm.getParent());
             Category parent = CategoryMapper.INSTANCE.toCategory(parentDto);
             category.setParent(parent);
@@ -60,13 +61,14 @@ public class CategoryServiceImpl implements CategoryService {
         throw new NotFoundResourceException("Data must be different");
     }
 
+    @Transactional
     @Override
     public void deleteCategory(Long id) {
         if (Objects.isNull(id)) {
             throw new BadRequestException("id must be not null");
         }
-        Category category = categoryRepo.findById(id).orElseThrow(() -> new NotFoundResourceException("category not found"));
-        categoryRepo.deleteById(category.getId());
+        getCategory(id);
+        categoryRepo.deleteById(id);
     }
 
     @Override
