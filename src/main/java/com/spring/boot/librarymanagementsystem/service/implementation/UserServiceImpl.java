@@ -14,6 +14,7 @@ import com.spring.boot.librarymanagementsystem.service.RoleService;
 import com.spring.boot.librarymanagementsystem.service.UserService;
 import com.spring.boot.librarymanagementsystem.utils.RoleType;
 import com.spring.boot.librarymanagementsystem.vm.user.UserSystemSignUpVm;
+import com.spring.boot.librarymanagementsystem.vm.user.UserUpdateVm;
 import com.spring.boot.librarymanagementsystem.vm.user.UsersResponseVm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -103,28 +104,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserSystemDto updateUserSystem(UserSystemSignUpVm userSystemSignUpVm) {
+    public UserSystemDto updateUserSystem(UserUpdateVm userUpdateVm) {
         boolean update = false;
-        if (Objects.isNull(userSystemSignUpVm.getId())) {
-            throw new BadRequestException("id must be not null");
-        }
-        UserSystemDto userSystemDto = getUserById(userSystemSignUpVm.getId());
-        if (!userSystemDto.getUsername().equals(userSystemSignUpVm.getUsername())) {
-            update = true;
-            userSystemDto.setUsername(userSystemSignUpVm.getUsername());
-        }
-        if (!userSystemDto.getPassword().equals(userSystemSignUpVm.getPassword())) {
-            update = true;
-            userSystemDto.setPassword(userSystemSignUpVm.getPassword());
-        }
-        if (!userSystemDto.getEmail().equals(userSystemSignUpVm.getEmail())) {
-            update = true;
-            userSystemDto.setEmail(userSystemSignUpVm.getEmail());
-        }
-        if (!userSystemDto.getFullName().equals(userSystemSignUpVm.getFullName())) {
-            update = true;
-            userSystemDto.setFullName(userSystemSignUpVm.getFullName());
-        }
+        UserSystemDto userSystemDto = getUserById(userUpdateVm.getId());
+        update = updateData(userUpdateVm, userSystemDto, update);
         if (!update) {
             throw new BadRequestException("data must be different");
         }
@@ -132,6 +115,26 @@ public class UserServiceImpl implements UserService {
         userSystem.setPassword(passwordEncoder.encode(userSystem.getPassword()));
         userSystem = userRepo.save(userSystem);
         return UserMapper.INSTANCE.toUserDto(userSystem);
+    }
+
+    private static boolean updateData(UserUpdateVm userUpdateVm, UserSystemDto userSystemDto, boolean update) {
+        if (userUpdateVm.getUsername() != null && !userSystemDto.getUsername().equals(userUpdateVm.getUsername())) {
+            update = true;
+            userSystemDto.setUsername(userUpdateVm.getUsername());
+        }
+        if (userUpdateVm.getPassword() != null && !userSystemDto.getPassword().equals(userUpdateVm.getPassword())) {
+            update = true;
+            userSystemDto.setPassword(userUpdateVm.getPassword());
+        }
+        if (userUpdateVm.getEmail() != null && !userSystemDto.getEmail().equals(userUpdateVm.getEmail())) {
+            update = true;
+            userSystemDto.setEmail(userUpdateVm.getEmail());
+        }
+        if (userUpdateVm.getFullName() != null && !userSystemDto.getFullName().equals(userUpdateVm.getFullName())) {
+            update = true;
+            userSystemDto.setFullName(userUpdateVm.getFullName());
+        }
+        return update;
     }
 
     @Override
