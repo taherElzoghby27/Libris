@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Objects;
 import java.util.Optional;
 
@@ -42,7 +43,7 @@ public class PublisherServiceImpl implements PublisherService {
             throw new NotFoundResourceException("publishers not found");
         }
         return new PublishersResponseVm(
-                result.getContent().stream().map(PublisherMapper.INSTANCE::toPublisherDto).toList(),
+                result.map(PublisherMapper.INSTANCE::toPublisherDto).getContent(),
                 result.getTotalElements()
         );
     }

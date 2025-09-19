@@ -30,7 +30,7 @@ public class AuthorServiceImpl implements AuthorService {
             throw new NotFoundResourceException("authors not found");
         }
         return new AuthorResponseVm(
-                result.getContent().stream().map(AuthorMapper.INSTANCE::toAuthorDto).toList(),
+                result.map(AuthorMapper.INSTANCE::toAuthorDto).getContent(),
                 result.getTotalElements()
         );
     }

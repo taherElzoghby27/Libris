@@ -76,7 +76,7 @@ public class BookServiceImpl implements BookService {
             throw new NotFoundResourceException("books not found");
         }
         return new BooksResponseVm(
-                result.getContent().stream().map(BookMapper.INSTANCE::toBookResponseVm).toList(),
+                result.map(BookMapper.INSTANCE::toBookResponseVm).getContent(),
                 result.getTotalElements()
         );
     }

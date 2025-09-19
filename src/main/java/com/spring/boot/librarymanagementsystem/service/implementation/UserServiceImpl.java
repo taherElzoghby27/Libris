@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
             throw new NotFoundResourceException("users not found");
         }
         return new UsersResponseVm(
-                result.getContent().stream().map(UserMapper.INSTANCE::toUserDto).toList(),
+                result.map(UserMapper.INSTANCE::toUserDto).getContent(),
                 result.getTotalElements()
         );
     }
