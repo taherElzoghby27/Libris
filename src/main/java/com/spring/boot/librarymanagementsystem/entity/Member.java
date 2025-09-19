@@ -32,7 +32,9 @@ public class Member extends BaseEntity<String> {
     private String phone;
     @Column(nullable = false)
     private String address;
-    private LocalDateTime memberShipStartDate;
+    @Column(nullable = false)
+    private LocalDateTime memberShipStartDate = LocalDateTime.now();
+    @Column(nullable = false)
     private LocalDateTime memberShipEndDate;
     @Enumerated(EnumType.STRING)
     private MemberShipStatus memberShipStatus = MemberShipStatus.ACTIVE;
