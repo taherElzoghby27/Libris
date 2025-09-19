@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "audit_log", schema = "LIBRARY_SYSTEM")
+@Table(name = "audit_log_user", schema = "LIBRARY_SYSTEM")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -20,7 +20,6 @@ public class ActivityUser extends BaseEntity<String> {
     private String action;
     @Column(name = "entity_name", length = 100, nullable = false)
     private String entityName;
-    @Column(columnDefinition = "jsonb")
     private String details;
     @Column(name = "timestamp", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private LocalDateTime timestamp = LocalDateTime.now();
