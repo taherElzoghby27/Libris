@@ -56,7 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
             update = true;
             oldCategoryDto.setName(categoryUpdateVm.getName());
         }
-        if ((Objects.nonNull(categoryUpdateVm.getParent()) && oldCategoryDto.getParent() == null) ||
+        if (Objects.nonNull(categoryUpdateVm.getParent()) && (oldCategoryDto.getParent() == null) ||
             (Objects.nonNull(categoryUpdateVm.getParent()) &&
              !oldCategoryDto.getParent().getId().equals(categoryUpdateVm.getParent()))) {
             update = true;

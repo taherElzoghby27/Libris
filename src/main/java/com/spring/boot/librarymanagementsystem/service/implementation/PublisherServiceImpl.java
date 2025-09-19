@@ -9,6 +9,7 @@ import com.spring.boot.librarymanagementsystem.repository.PublisherRepo;
 import com.spring.boot.librarymanagementsystem.service.PaginationService;
 import com.spring.boot.librarymanagementsystem.service.PublisherService;
 import com.spring.boot.librarymanagementsystem.vm.publisher.PublisherResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.publisher.PublisherUpdateVm;
 import com.spring.boot.librarymanagementsystem.vm.publisher.PublishersResponseVm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -59,26 +60,28 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public PublisherDto updatePublisher(PublisherDto publisherDto) {
+    public PublisherDto updatePublisher(PublisherUpdateVm publisherUpdateVm) {
         boolean update = false;
-        if (Objects.isNull(publisherDto.getId())) {
-            throw new BadRequestException("id must be not null");
-        }
-        PublisherDto oldPublisherDto = getPublisher(publisherDto.getId());
-        if (!Objects.equals(oldPublisherDto.getName(), publisherDto.getName())) {
-            update = true;
-            oldPublisherDto.setName(publisherDto.getName());
-        }
-        if (!Objects.equals(oldPublisherDto.getAddress(), publisherDto.getAddress())) {
-            update = true;
-            oldPublisherDto.setAddress(publisherDto.getAddress());
-        }
+        PublisherDto oldPublisherDto = getPublisher(publisherUpdateVm.getId());
+        update = updateData(publisherUpdateVm, oldPublisherDto, update);
         if (update) {
             Publisher publisher = PublisherMapper.INSTANCE.toPublisher(oldPublisherDto);
             publisher = publisherRepo.save(publisher);
             return PublisherMapper.INSTANCE.toPublisherDto(publisher);
         }
         throw new BadRequestException("data must be different");
+    }
+
+    private static boolean updateData(PublisherUpdateVm publisherUpdateVm, PublisherDto oldPublisherDto, boolean update) {
+        if (publisherUpdateVm.getName() != null && !Objects.equals(oldPublisherDto.getName(), publisherUpdateVm.getName())) {
+            update = true;
+            oldPublisherDto.setName(publisherUpdateVm.getName());
+        }
+        if (publisherUpdateVm.getAddress() != null && !Objects.equals(oldPublisherDto.getAddress(), publisherUpdateVm.getAddress())) {
+            update = true;
+            oldPublisherDto.setAddress(publisherUpdateVm.getAddress());
+        }
+        return update;
     }
 
     @Override

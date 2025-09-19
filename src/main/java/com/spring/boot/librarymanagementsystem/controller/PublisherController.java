@@ -4,6 +4,7 @@ import com.spring.boot.librarymanagementsystem.dto.PublisherDto;
 import com.spring.boot.librarymanagementsystem.dto.SuccessDto;
 import com.spring.boot.librarymanagementsystem.service.PublisherService;
 import com.spring.boot.librarymanagementsystem.vm.publisher.PublisherResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.publisher.PublisherUpdateVm;
 import com.spring.boot.librarymanagementsystem.vm.publisher.PublishersResponseVm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -49,9 +50,9 @@ public class PublisherController {
     }
 
     @PutMapping("update-publisher")
-    public SuccessDto<ResponseEntity<PublisherDto>> updatePublisher(@Valid @RequestBody PublisherDto publisherDto) {
+    public SuccessDto<ResponseEntity<PublisherDto>> updatePublisher(@Valid @RequestBody PublisherUpdateVm publisherUpdateVm) {
         return new SuccessDto<>(
-                ResponseEntity.ok(publisherService.updatePublisher(publisherDto))
+                ResponseEntity.ok(publisherService.updatePublisher(publisherUpdateVm))
         );
     }
 

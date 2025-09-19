@@ -2,6 +2,7 @@ package com.spring.boot.librarymanagementsystem.service;
 
 import com.spring.boot.librarymanagementsystem.dto.PublisherDto;
 import com.spring.boot.librarymanagementsystem.vm.publisher.PublisherResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.publisher.PublisherUpdateVm;
 import com.spring.boot.librarymanagementsystem.vm.publisher.PublishersResponseVm;
 
 public interface PublisherService {
@@ -11,7 +12,7 @@ public interface PublisherService {
 
     void deletePublisher(Long id);
 
-    PublisherDto updatePublisher(PublisherDto publisherDto);
+    PublisherDto updatePublisher(PublisherUpdateVm publisherUpdateVm);
 
     PublisherResponseVm getPublisherWithBooks(Long id);
 
