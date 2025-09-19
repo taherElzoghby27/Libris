@@ -27,13 +27,16 @@ public class AuthServiceImpl implements AuthService {
         if (!userSystemDto.getEnabled()) {
             throw new NotFoundResourceException("User not enabled");
         }
-        if (!userSystemDto.getEmail().equals(userSystemLoginVm.getEmail()) &&
-            passwordEncoder.matches(userSystemLoginVm.getPassword(), userSystemDto.getPassword())) {
-            throw new InvalidCredentialsException("Invalid credentials");
+        boolean emailValid = userSystemDto.getEmail().equals(userSystemLoginVm.getEmail());
+        System.out.println(userSystemDto.getPassword());
+        boolean passwordValid = passwordEncoder.matches(userSystemLoginVm.getPassword(), userSystemDto.getPassword());
+        if (emailValid && passwordValid) {
+            UserResponseVm userResponseVm = UserMapper.INSTANCE.toUserResponseVm(userSystemDto);
+            userResponseVm.setToken(tokenHandler.generateToken(userSystemDto));
+            return userResponseVm;
+
         }
-        UserResponseVm userResponseVm = UserMapper.INSTANCE.toUserResponseVm(userSystemDto);
-        userResponseVm.setToken(tokenHandler.generateToken(userSystemDto));
-        return userResponseVm;
+        throw new InvalidCredentialsException("Invalid credentials");
     }
 
     @Override
