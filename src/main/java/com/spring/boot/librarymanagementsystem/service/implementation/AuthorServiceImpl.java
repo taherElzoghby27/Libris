@@ -62,6 +62,16 @@ public class AuthorServiceImpl implements AuthorService {
     public AuthorDto updateAuthor(AuthorUpdateVm authorUpdateVm) {
         boolean update = false;
         AuthorDto oldAuthorDto = getAuthor(authorUpdateVm.getId());
+        update = updateData(authorUpdateVm, oldAuthorDto, update);
+        if (update) {
+            Author author = AuthorMapper.INSTANCE.toAuthor(oldAuthorDto);
+            author = authorRepo.save(author);
+            return AuthorMapper.INSTANCE.toAuthorDto(author);
+        }
+        throw new BadRequestException("data must be different");
+    }
+
+    private static boolean updateData(AuthorUpdateVm authorUpdateVm, AuthorDto oldAuthorDto, boolean update) {
         if (authorUpdateVm.getFirstName() != null && !oldAuthorDto.getFirstName().equals(authorUpdateVm.getFirstName())) {
             update = true;
             oldAuthorDto.setFirstName(authorUpdateVm.getFirstName());
@@ -74,12 +84,7 @@ public class AuthorServiceImpl implements AuthorService {
             update = true;
             oldAuthorDto.setBio(authorUpdateVm.getBio());
         }
-        if (update) {
-            Author author = AuthorMapper.INSTANCE.toAuthor(oldAuthorDto);
-            author = authorRepo.save(author);
-            return AuthorMapper.INSTANCE.toAuthorDto(author);
-        }
-        throw new BadRequestException("data must be different");
+        return update;
     }
 
     @Override

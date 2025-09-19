@@ -107,9 +107,6 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto updateBook(BookRequestUpdateVm bookRequestUpdateVm) {
         boolean update = false;
-        if (Objects.isNull(bookRequestUpdateVm.getId())) {
-            throw new BadRequestException("id must be not null");
-        }
         BookDto oldBookDto = getBook(bookRequestUpdateVm.getId());
         Book oldBook = BookMapper.INSTANCE.toBook(oldBookDto);
         update = updateData(bookRequestUpdateVm, oldBook, update);
@@ -121,27 +118,27 @@ public class BookServiceImpl implements BookService {
     }
 
     private static boolean updateData(BookRequestUpdateVm bookRequestUpdateVm, Book oldBook, boolean update) {
-        if (!oldBook.getTitle().equals(bookRequestUpdateVm.getTitle())) {
+        if (Objects.nonNull(bookRequestUpdateVm.getTitle()) && !oldBook.getTitle().equals(bookRequestUpdateVm.getTitle())) {
             update = true;
             oldBook.setTitle(bookRequestUpdateVm.getTitle());
         }
-        if (!oldBook.getSummary().equals(bookRequestUpdateVm.getSummary())) {
+        if (Objects.nonNull(bookRequestUpdateVm.getSummary()) && !oldBook.getSummary().equals(bookRequestUpdateVm.getSummary())) {
             update = true;
             oldBook.setSummary(bookRequestUpdateVm.getSummary());
         }
-        if (!oldBook.getIsbn().equals(bookRequestUpdateVm.getIsbn())) {
+        if (Objects.nonNull(bookRequestUpdateVm.getIsbn()) && !oldBook.getIsbn().equals(bookRequestUpdateVm.getIsbn())) {
             update = true;
             oldBook.setIsbn(bookRequestUpdateVm.getIsbn());
         }
-        if (!oldBook.getPublicationYear().equals(bookRequestUpdateVm.getPublicationYear())) {
+        if (Objects.nonNull(bookRequestUpdateVm.getPublicationYear()) && !oldBook.getPublicationYear().equals(bookRequestUpdateVm.getPublicationYear())) {
             update = true;
             oldBook.setPublicationYear(bookRequestUpdateVm.getPublicationYear());
         }
-        if (!oldBook.getEdition().equals(bookRequestUpdateVm.getEdition())) {
+        if (Objects.nonNull(bookRequestUpdateVm.getEdition()) && !oldBook.getEdition().equals(bookRequestUpdateVm.getEdition())) {
             update = true;
             oldBook.setEdition(bookRequestUpdateVm.getEdition());
         }
-        if (!bookRequestUpdateVm.getCoverImages().isEmpty()) {
+        if (Objects.nonNull(bookRequestUpdateVm.getCoverImages()) && !bookRequestUpdateVm.getCoverImages().isEmpty()) {
             update = true;
             oldBook.setCoverImages(bookRequestUpdateVm.getCoverImages());
         }
