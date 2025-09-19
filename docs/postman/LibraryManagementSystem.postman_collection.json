@@ -1,0 +1,1605 @@
+{
+	"info": {
+		"_postman_id": "ef7b2808-062e-4812-9aa7-ff1ad58bd64f",
+		"name": "library",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29059993"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "sign up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"ahmed\",\r\n    \"full_name\": \"taher amin admin\",\r\n    \"password\": \"2742002\",\r\n    \"email\": \"tataamen678@gmail.com\"\r\n}\r\n//admin account\r\n// {\r\n//   \"password\": \"2742002\",\r\n//   \"email\": \"taheraminAdmin@gmail.com\"\r\n// }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/auth/sign-up",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"auth",
+								"sign-up"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\r\n//   \"password\": \"2742002\",\r\n//   \"email\": \"tataamen678@gmail.com\"\r\n// }\r\n//admin account\r\n{\r\n  \"password\": \"2742002\",\r\n  \"email\": \"taheraminAdmin@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiBhZG1pbiIsImlhdCI6MTc1ODMyMDA4NywiZXhwIjoxNzYwOTEyMDg3fQ.qYH6gyMgHjpIe_Cvob5R_7rdhm6KpaUB8irgDRPdmbaG5oRI71L66xuFlypjlnw9",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/auth/get-users?page=1&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"auth",
+								"get-users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user by email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/auth/get-user-by-email?email=tataamen678@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"auth",
+								"get-user-by-email"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "tataamen678@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"email\": \"tata@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/auth/update-user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"auth",
+								"update-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/auth/delete-user?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"auth",
+								"delete-user"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update roles for user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/auth/update-user-roles?user_id=21&roles_name=STAFF&roles_name=LIBRARIAN",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"auth",
+								"update-user-roles"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "21"
+								},
+								{
+									"key": "roles_name",
+									"value": "STAFF"
+								},
+								{
+									"key": "roles_name",
+									"value": "LIBRARIAN"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "authors",
+			"item": [
+				{
+					"name": "create author",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4MjQyOTMxLCJleHAiOjE3NjA4MzQ5MzF9.HHTXGy_Cw7DzW2N44JqOq2hDq_d60k_FVqx1khjzY8S-bwdoGWlQho_FR8XH1gbP",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"first_name\": \"yamen 1\",\r\n  \"last_name\": \"abbas 1\",\r\n  \"bio\": \"se\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/authors/create-author",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"authors",
+								"create-author"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get author",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/authors/get-author?author_id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"authors",
+								"get-author"
+							],
+							"query": [
+								{
+									"key": "author_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update author",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"first_name\": \"taher\",\r\n    \"bio\": \"me\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/authors/update-author",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"authors",
+								"update-author"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete author",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YXRhYW1lbjIzNCIsImlhdCI6MTc1ODIxNTI1NSwiZXhwIjoxNzYwODA3MjU1fQ.kcY8LZoEo1hB6oRDHY6b_wMkenWSzpMNQ6eY7vh3IEZ9EEiHFFdvVV83VwpKzS-z",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/authors/delete-author?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"authors",
+								"delete-author"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get authors",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YXRhYW1lbjIzNCIsImlhdCI6MTc1ODIxNTI1NSwiZXhwIjoxNzYwODA3MjU1fQ.kcY8LZoEo1hB6oRDHY6b_wMkenWSzpMNQ6eY7vh3IEZ9EEiHFFdvVV83VwpKzS-z",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/authors/get-authors?page=1&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"authors",
+								"get-authors"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "categories",
+			"item": [
+				{
+					"name": "create category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YXRhYW1lbjIzNCIsImlhdCI6MTc1ODIxNTI1NSwiZXhwIjoxNzYwODA3MjU1fQ.kcY8LZoEo1hB6oRDHY6b_wMkenWSzpMNQ6eY7vh3IEZ9EEiHFFdvVV83VwpKzS-z",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"category 6\",\r\n  \"parent\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/categories/create-category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"categories",
+								"create-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 3,\r\n    \"name\":\"categor 3 ya\",\r\n    \"parent\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/categories/update-category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"categories",
+								"update-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4MjQyOTMxLCJleHAiOjE3NjA4MzQ5MzF9.HHTXGy_Cw7DzW2N44JqOq2hDq_d60k_FVqx1khjzY8S-bwdoGWlQho_FR8XH1gbP",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/categories/delete-category?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"categories",
+								"delete-category"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4MjQyOTMxLCJleHAiOjE3NjA4MzQ5MzF9.HHTXGy_Cw7DzW2N44JqOq2hDq_d60k_FVqx1khjzY8S-bwdoGWlQho_FR8XH1gbP",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/categories/get-category?id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"categories",
+								"get-category"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get categories",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4MjQyOTMxLCJleHAiOjE3NjA4MzQ5MzF9.HHTXGy_Cw7DzW2N44JqOq2hDq_d60k_FVqx1khjzY8S-bwdoGWlQho_FR8XH1gbP",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/categories/get-categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"categories",
+								"get-categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get category with books",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4MjQyOTMxLCJleHAiOjE3NjA4MzQ5MzF9.HHTXGy_Cw7DzW2N44JqOq2hDq_d60k_FVqx1khjzY8S-bwdoGWlQho_FR8XH1gbP",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/categories/get-category-with-books?id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"categories",
+								"get-category-with-books"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "books",
+			"item": [
+				{
+					"name": "add book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4MjQyOTMxLCJleHAiOjE3NjA4MzQ5MzF9.HHTXGy_Cw7DzW2N44JqOq2hDq_d60k_FVqx1khjzY8S-bwdoGWlQho_FR8XH1gbP",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"book 3\",\r\n  \"summary\": \"book 3 summary\",\r\n  \"language\": \"English\",\r\n  \"publication_year\": 2020,\r\n  \"isbn\": \"2314129352\",\r\n  \"edition\": \"1\",\r\n  \"cover_images\": [\"ju98ru89rhfw39frh98r7hy3498jhr98//\"],\r\n  \"publisher_id\": 2,\r\n  \"authors_id\": [1,2],\r\n  \"category_id\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/books/create-book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"books",
+								"create-book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4MjQyOTMxLCJleHAiOjE3NjA4MzQ5MzF9.HHTXGy_Cw7DzW2N44JqOq2hDq_d60k_FVqx1khjzY8S-bwdoGWlQho_FR8XH1gbP",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/books/get-book?id=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"books",
+								"get-book"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 6,\r\n    \"summary\": \"book 3 3 summary\",\r\n    \"language\": \"English\",\r\n    \"isbn\": \"231442352\",\r\n    \"edition\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/books/update-book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"books",
+								"update-book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get books",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/books/get-books?page=1&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"books",
+								"get-books"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/books/delete-book?id={{$random.integer(100)}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"books",
+								"delete-book"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{$random.integer(100)}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "publishers",
+			"item": [
+				{
+					"name": "add publisher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4MjQyOTMxLCJleHAiOjE3NjA4MzQ5MzF9.HHTXGy_Cw7DzW2N44JqOq2hDq_d60k_FVqx1khjzY8S-bwdoGWlQho_FR8XH1gbP",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"publisher 2\",\r\n  \"address\": \"cairo festeval\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/publishers/create-publisher",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"publishers",
+								"create-publisher"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get publisher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4MjQyOTMxLCJleHAiOjE3NjA4MzQ5MzF9.HHTXGy_Cw7DzW2N44JqOq2hDq_d60k_FVqx1khjzY8S-bwdoGWlQho_FR8XH1gbP",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/publishers/get-publisher?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"publishers",
+								"get-publisher"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get publisher with books",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4MjQyOTMxLCJleHAiOjE3NjA4MzQ5MzF9.HHTXGy_Cw7DzW2N44JqOq2hDq_d60k_FVqx1khjzY8S-bwdoGWlQho_FR8XH1gbP",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/publishers/get-publisher-with-books?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"publishers",
+								"get-publisher-with-books"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get publishers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4MjQyOTMxLCJleHAiOjE3NjA4MzQ5MzF9.HHTXGy_Cw7DzW2N44JqOq2hDq_d60k_FVqx1khjzY8S-bwdoGWlQho_FR8XH1gbP",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/publishers/get-publishers?page=1&size=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"publishers",
+								"get-publishers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update publisher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4MjQyOTMxLCJleHAiOjE3NjA4MzQ5MzF9.HHTXGy_Cw7DzW2N44JqOq2hDq_d60k_FVqx1khjzY8S-bwdoGWlQho_FR8XH1gbP",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 2,\r\n  \"address\": \"London\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/publishers/update-publisher",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"publishers",
+								"update-publisher"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete publisher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4MjQyOTMxLCJleHAiOjE3NjA4MzQ5MzF9.HHTXGy_Cw7DzW2N44JqOq2hDq_d60k_FVqx1khjzY8S-bwdoGWlQho_FR8XH1gbP",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/publishers/delete-publisher?id={{$random.integer(100)}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"publishers",
+								"delete-publisher"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{$random.integer(100)}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "member",
+			"item": [
+				{
+					"name": "add member",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"full_name\": \"mohamed member12\",\r\n  \"email\": \"ahmed11222@gmail.com\",\r\n  \"phone\": \"011134122352\",\r\n  \"address\": \"cairo, Egypt\",\r\n  \"membership_end_date\": \"2025-12-31T23:59:59\",\r\n  \"membership_status\": \"NON_ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/members/create-member",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"members",
+								"create-member"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update member",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"membership_endDate\": \"2025-12-31T23:59:19\",\r\n    \"membership_status\": \"NON_ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/members/update-member",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"members",
+								"update-member"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get member",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/members/get-member?id={{$random.integer(100)}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"members",
+								"get-member"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{$random.integer(100)}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get members",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/members/get-members?page=1&size=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"members",
+								"get-members"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete member",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/members/delete-member?id=111",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"members",
+								"delete-member"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "111"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "borrowing",
+			"item": [
+				{
+					"name": "add borrowing",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"book_id\": 6,\r\n  \"issued_by_user_id\": 21,\r\n  \"issued_at\": \"2025-12-31T23:59:59\",\r\n  \"due_date\": \"2026-12-31T23:59:59\",\r\n  //\"returned_by_user_id\": 0,\r\n  //\"returnedAt\": \"\",\r\n  //\"borrowing_status\": \"BORROWED\",\r\n  \"member_id\": 3\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/borrowings/create-borrowing",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"borrowings",
+								"create-borrowing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update borrowing",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"book_id\": 6,\r\n  \"issued_by_user_id\": 21,\r\n  \"issued_at\": \"2025-12-31T23:59:59\",\r\n  \"due_date\": \"2026-12-31T23:59:59\",\r\n  \"returned_by_user_id\": 21,\r\n  \"returned_at\": \"2026-11-30T23:59:59\",\r\n  \"borrowing_status\": \"RETURNED\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/borrowings/update-borrowing",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"borrowings",
+								"update-borrowing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get borrowing",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/borrowings/get-borrowing?id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"borrowings",
+								"get-borrowing"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get borrowing with data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/borrowings/get-borrowing-with-data?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"borrowings",
+								"get-borrowing-with-data"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all borrowings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/borrowings/get-borrowings?page=1&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"borrowings",
+								"get-borrowings"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete borrowing",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0YWhlckVsem9naGJ5IiwiaWF0IjoxNzU4Mjc2MTYzLCJleHAiOjE3NjA4NjgxNjN9.qPoK2Wm05bAxpPsFDTLDZjlGsiNKehyh73UYTe9RX9sVkkiGe5LBmANlmMxnBSWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/borrowings/delete-borrowing?id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"borrowings",
+								"delete-borrowing"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user activity",
+			"item": [
+				{
+					"name": "get all activities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiBhZG1pbiIsImlhdCI6MTc1ODMyMDA4NywiZXhwIjoxNzYwOTEyMDg3fQ.qYH6gyMgHjpIe_Cvob5R_7rdhm6KpaUB8irgDRPdmbaG5oRI71L66xuFlypjlnw9",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/activities/get-activities?page=1&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"activities",
+								"get-activities"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
