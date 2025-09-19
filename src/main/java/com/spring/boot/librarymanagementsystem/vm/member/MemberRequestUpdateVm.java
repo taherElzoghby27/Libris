@@ -1,5 +1,6 @@
 package com.spring.boot.librarymanagementsystem.vm.member;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.spring.boot.librarymanagementsystem.utils.MemberShipStatus;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -20,13 +21,16 @@ import java.time.LocalDateTime;
 public class MemberRequestUpdateVm {
     @NotNull(message = "id must be not null")
     private Long id;
+    @JsonProperty("full_name")
     private String fullName;
     @Email(message = "email format")
     private String email;
     @Pattern(regexp = "^[0-9]{10,15}$", message = "phone number must be valid")
     private String phone;
     private String address;
+    @JsonProperty("membership_end_date")
     private LocalDateTime memberShipEndDate;
     @Enumerated(EnumType.STRING)
+    @JsonProperty("membership_status")
     private MemberShipStatus memberShipStatus;
 }

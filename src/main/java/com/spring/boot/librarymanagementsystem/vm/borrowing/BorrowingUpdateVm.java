@@ -29,7 +29,9 @@ public class BorrowingUpdateVm {
     private LocalDateTime dueDate;
     @JsonProperty("returned_by_user_id")
     private Long returnedByUser;
+    @JsonProperty("returned_at")
     private LocalDateTime returnedAt;
     @Enumerated(EnumType.STRING)
+    @JsonProperty("borrowing_status")
     private BorrowingStatus borrowingStatus;
 }

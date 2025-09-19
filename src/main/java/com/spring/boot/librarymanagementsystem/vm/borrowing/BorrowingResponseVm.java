@@ -16,10 +16,14 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 public class BorrowingResponseVm {
+    @JsonProperty("issued_at")
     private LocalDateTime issuedAt;
+    @JsonProperty("due_date")
     private LocalDateTime dueDate;
+    @JsonProperty("returned_at")
     private LocalDateTime returnedAt;
     @Enumerated(EnumType.STRING)
+    @JsonProperty("borrowing_status")
     private BorrowingStatus borrowingStatus;
     @JsonProperty("member_id")
     private Long memberId;
