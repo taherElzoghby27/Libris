@@ -1,0 +1,195 @@
+package com.spring.boot.librarymanagementsystem.service.implementation;
+
+import com.spring.boot.librarymanagementsystem.dto.BookDto;
+import com.spring.boot.librarymanagementsystem.dto.BorrowingDto;
+import com.spring.boot.librarymanagementsystem.dto.MemberDto;
+import com.spring.boot.librarymanagementsystem.dto.UserSystemDto;
+import com.spring.boot.librarymanagementsystem.entity.Book;
+import com.spring.boot.librarymanagementsystem.entity.Borrowing;
+import com.spring.boot.librarymanagementsystem.entity.Member;
+import com.spring.boot.librarymanagementsystem.entity.UserSystem;
+import com.spring.boot.librarymanagementsystem.exception.custom_exception.BadRequestException;
+import com.spring.boot.librarymanagementsystem.exception.custom_exception.NotFoundResourceException;
+import com.spring.boot.librarymanagementsystem.mapper.BookMapper;
+import com.spring.boot.librarymanagementsystem.mapper.BorrowingMapper;
+import com.spring.boot.librarymanagementsystem.mapper.MemberMapper;
+import com.spring.boot.librarymanagementsystem.mapper.UserMapper;
+import com.spring.boot.librarymanagementsystem.repository.BorrowingRepo;
+import com.spring.boot.librarymanagementsystem.service.BookService;
+import com.spring.boot.librarymanagementsystem.service.BorrowingService;
+import com.spring.boot.librarymanagementsystem.service.MemberService;
+import com.spring.boot.librarymanagementsystem.service.PaginationService;
+import com.spring.boot.librarymanagementsystem.service.UserService;
+import com.spring.boot.librarymanagementsystem.utils.BorrowingStatus;
+import com.spring.boot.librarymanagementsystem.vm.borrowing.BorrowingRequestVm;
+import com.spring.boot.librarymanagementsystem.vm.borrowing.BorrowingResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.borrowing.BorrowingUpdateVm;
+import com.spring.boot.librarymanagementsystem.vm.borrowing.BorrowingsResponseVm;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+public class BorrowingServiceImpl implements BorrowingService {
+
+    private final BorrowingRepo borrowingRepo;
+    private final BookService bookService;
+    private final MemberService memberService;
+    private final UserService userService;
+
+    @Override
+    public BorrowingDto addBorrowing(BorrowingRequestVm borrowingRequestVm) {
+        validateDates(borrowingRequestVm.getIssuedAt(), borrowingRequestVm.getDueDate(), borrowingRequestVm.getReturnedAt());
+        Borrowing borrowing = BorrowingMapper.INSTANCE.toBorrowing(borrowingRequestVm);
+        // set relations
+        setRelations(borrowingRequestVm, borrowing);
+        borrowing.setBorrowingStatus(BorrowingStatus.BORROWED);
+        borrowing = borrowingRepo.save(borrowing);
+        return BorrowingMapper.INSTANCE.toBorrowingDto(borrowing);
+    }
+
+    private void setRelations(BorrowingRequestVm vm, Borrowing borrowing) {
+        // book
+        BookDto bookDto = bookService.getBook(vm.getBookId());
+        Book book = BookMapper.INSTANCE.toBook(bookDto);
+        borrowing.setBook(book);
+        // member
+        MemberDto memberDto = memberService.getMember(vm.getMember());
+        Member member = MemberMapper.INSTANCE.toMember(memberDto);
+        borrowing.setMember(member);
+        // issued by user
+        UserSystemDto issuedByUserDto = userService.getUserById(vm.getIssuedByUserId());
+        UserSystem issuedByUser = UserMapper.INSTANCE.toUserSystem(issuedByUserDto);
+        borrowing.setIssuedByUser(issuedByUser);
+        // returned by user
+        if (Objects.nonNull(vm.getReturnedByUser())) {
+            UserSystemDto returnedByUserDto = userService.getUserById(vm.getReturnedByUser());
+            UserSystem returnedByUser = UserMapper.INSTANCE.toUserSystem(returnedByUserDto);
+            borrowing.setReturnedByUser(returnedByUser);
+        }
+    }
+
+    private void validateDates(LocalDateTime issuedAt, LocalDateTime dueDate, LocalDateTime returnedAt) {
+        if (!dueDate.isAfter(issuedAt)) {
+            throw new BadRequestException("dueDate must be after issuedAt");
+        }
+        if (Objects.nonNull(returnedAt) && returnedAt.isBefore(issuedAt)) {
+            throw new BadRequestException("returnedAt must be after issuedAt");
+        }
+    }
+
+    @Override
+    public BorrowingResponseVm getBorrowingWithoutData(Long id) {
+        if (Objects.isNull(id)) {
+            throw new BadRequestException("id must be not null");
+        }
+        Optional<Borrowing> result = borrowingRepo.findBorrowing(id);
+        if (result.isEmpty()) {
+            throw new NotFoundResourceException("borrowing not found");
+        }
+        return BorrowingMapper.INSTANCE.toBorrowingResponseVm(result.get());
+    }
+
+    @Override
+    public BorrowingDto getBorrowingWithData(Long id) {
+        if (Objects.isNull(id)) {
+            throw new BadRequestException("id must be not null");
+        }
+        Optional<Borrowing> result = borrowingRepo.findById(id);
+        if (result.isEmpty()) {
+            throw new NotFoundResourceException("borrowing not found");
+        }
+        return BorrowingMapper.INSTANCE.toBorrowingDto(result.get());
+    }
+
+    @Override
+    public BorrowingsResponseVm getAllBorrowings(int page, int size) {
+        Pageable pageable = PaginationService.getPageable(page, size);
+        Page<Borrowing> result = borrowingRepo.findAll(pageable);
+        if (result.isEmpty()) {
+            throw new NotFoundResourceException("borrowings not found");
+        }
+        return new BorrowingsResponseVm(
+                result.map(BorrowingMapper.INSTANCE::toBorrowingResponseVm).getContent(),
+                result.getTotalElements()
+        );
+    }
+
+    @Transactional
+    @Override
+    public BorrowingDto updateBorrowing(BorrowingUpdateVm borrowingUpdateVm) {
+        validateDates(borrowingUpdateVm.getIssuedAt(), borrowingUpdateVm.getDueDate(), borrowingUpdateVm.getReturnedAt());
+        // ensure exists
+        BorrowingDto oldDto = getBorrowingWithData(borrowingUpdateVm.getId());
+        Borrowing oldBorrowing = BorrowingMapper.INSTANCE.toBorrowing(oldDto);
+        boolean update = false;
+        update = updateData(borrowingUpdateVm, oldBorrowing, update);
+        if (update) {
+            oldBorrowing = borrowingRepo.save(oldBorrowing);
+            return BorrowingMapper.INSTANCE.toBorrowingDto(oldBorrowing);
+        }
+        throw new BadRequestException("data must be different");
+    }
+
+    private boolean updateData(BorrowingUpdateVm borrowingUpdateVm, Borrowing old, boolean update) {
+        if (Objects.nonNull(borrowingUpdateVm.getIssuedAt()) &&
+            !old.getIssuedAt().equals(borrowingUpdateVm.getIssuedAt())) {
+            update = true;
+            old.setIssuedAt(borrowingUpdateVm.getIssuedAt());
+        }
+        if (Objects.nonNull(borrowingUpdateVm.getDueDate()) &&
+            !old.getDueDate().equals(borrowingUpdateVm.getDueDate())) {
+            update = true;
+            old.setDueDate(borrowingUpdateVm.getDueDate());
+        }
+        if (Objects.nonNull(borrowingUpdateVm.getReturnedAt()) &&
+            !borrowingUpdateVm.getReturnedAt().equals(old.getReturnedAt())) {
+            update = true;
+            old.setReturnedAt(borrowingUpdateVm.getReturnedAt());
+        }
+        if (Objects.nonNull(borrowingUpdateVm.getBorrowingStatus()) &&
+            !old.getBorrowingStatus().equals(borrowingUpdateVm.getBorrowingStatus())) {
+            update = true;
+            old.setBorrowingStatus(borrowingUpdateVm.getBorrowingStatus());
+        }
+        if (Objects.nonNull(borrowingUpdateVm.getBookId())) {
+            BookDto bookDto = bookService.getBook(borrowingUpdateVm.getBookId());
+            old.setBook(BookMapper.INSTANCE.toBook(bookDto));
+            update = true;
+        }
+        if (Objects.nonNull(borrowingUpdateVm.getMember())) {
+            MemberDto memberDto = memberService.getMember(borrowingUpdateVm.getMember());
+            old.setMember(MemberMapper.INSTANCE.toMember(memberDto));
+            update = true;
+        }
+        if (Objects.nonNull(borrowingUpdateVm.getIssuedByUserId())) {
+            UserSystemDto userSystemDto = userService.getUserById(borrowingUpdateVm.getIssuedByUserId());
+            old.setIssuedByUser(UserMapper.INSTANCE.toUserSystem(userSystemDto));
+            update = true;
+        }
+        if (Objects.nonNull(borrowingUpdateVm.getReturnedByUser())) {
+            UserSystemDto userSystemDto = userService.getUserById(borrowingUpdateVm.getReturnedByUser());
+            old.setReturnedByUser(UserMapper.INSTANCE.toUserSystem(userSystemDto));
+            update = true;
+        }
+        return update;
+    }
+
+    @Transactional
+    @Override
+    public void deleteBorrowing(Long id) {
+        if (Objects.isNull(id)) {
+            throw new BadRequestException("id must be not null");
+        }
+        // ensure exists
+        getBorrowingWithoutData(id);
+        borrowingRepo.deleteById(id);
+    }
+}

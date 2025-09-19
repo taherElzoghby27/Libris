@@ -35,7 +35,7 @@ public class Borrowing extends BaseEntity<String> {
     private UserSystem returnedByUser;
     private LocalDateTime returnedAt;
     @Enumerated(EnumType.STRING)
-    private BorrowingStatus borrowingStatus = BorrowingStatus.BORROWED;
+    private BorrowingStatus borrowingStatus;
     @ManyToOne
     @JoinColumn(nullable = false)
     private Member member;
