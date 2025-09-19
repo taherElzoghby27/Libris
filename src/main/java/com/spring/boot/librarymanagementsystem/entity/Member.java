@@ -37,7 +37,7 @@ public class Member extends BaseEntity<String> {
     @Column(nullable = false)
     private LocalDateTime memberShipEndDate;
     @Enumerated(EnumType.STRING)
-    private MemberShipStatus memberShipStatus = MemberShipStatus.ACTIVE;
+    private MemberShipStatus memberShipStatus;
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Borrowing> borrowingList = new ArrayList<>();
 }

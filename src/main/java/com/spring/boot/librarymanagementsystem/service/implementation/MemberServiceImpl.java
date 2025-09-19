@@ -8,6 +8,8 @@ import com.spring.boot.librarymanagementsystem.mapper.MemberMapper;
 import com.spring.boot.librarymanagementsystem.repository.MemberRepo;
 import com.spring.boot.librarymanagementsystem.service.MemberService;
 import com.spring.boot.librarymanagementsystem.service.PaginationService;
+import com.spring.boot.librarymanagementsystem.utils.MemberShipStatus;
+import com.spring.boot.librarymanagementsystem.vm.MemberRequestUpdateVm;
 import com.spring.boot.librarymanagementsystem.vm.MemberRequestVm;
 import com.spring.boot.librarymanagementsystem.vm.MembersResponseVm;
 import lombok.RequiredArgsConstructor;
@@ -28,13 +30,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberDto addMember(MemberRequestVm memberRequestVm) {
-        if (Objects.nonNull(memberRequestVm.getId())) {
-            throw new BadRequestException("id must be null");
-        }
         if (!memberRequestVm.getMemberShipEndDate().isAfter(LocalDateTime.now())) {
             throw new BadRequestException("memberShipEndDate must be after now");
         }
         Member member = MemberMapper.INSTANCE.toMember(memberRequestVm);
+        member.setMemberShipStatus(MemberShipStatus.ACTIVE);
         member = memberRepo.save(member);
         return MemberMapper.INSTANCE.toMemberDto(member);
     }
@@ -73,14 +73,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberDto updateMember(MemberRequestVm memberRequestVm) {
-        if (Objects.isNull(memberRequestVm.getId())) {
-            throw new BadRequestException("id must be not null");
-        }
-        MemberDto oldMemberDto = getMember(memberRequestVm.getId());
+    public MemberDto updateMember(MemberRequestUpdateVm memberRequestUpdateVm) {
+        MemberDto oldMemberDto = getMember(memberRequestUpdateVm.getId());
         Member oldMember = MemberMapper.INSTANCE.toMember(oldMemberDto);
         boolean update = false;
-        update = updateData(memberRequestVm, oldMember, update);
+        update = updateData(memberRequestUpdateVm, oldMember, update);
         if (update) {
             oldMember = memberRepo.save(oldMember);
             return MemberMapper.INSTANCE.toMemberDto(oldMember);
@@ -88,26 +85,39 @@ public class MemberServiceImpl implements MemberService {
         throw new NotFoundResourceException("data must be different");
     }
 
-    private static boolean updateData(MemberRequestVm memberRequestVm, Member oldMember, boolean update) {
-        if (!oldMember.getFullName().equals(memberRequestVm.getFullName())) {
+    private static boolean updateData(MemberRequestUpdateVm memberRequestUpdateVm, Member oldMember, boolean update) {
+        if (Objects.nonNull(memberRequestUpdateVm.getFullName()) &&
+            !oldMember.getFullName().equals(memberRequestUpdateVm.getFullName())) {
             update = true;
-            oldMember.setFullName(memberRequestVm.getFullName());
+            oldMember.setFullName(memberRequestUpdateVm.getFullName());
         }
-        if (!oldMember.getEmail().equals(memberRequestVm.getEmail())) {
+        if (Objects.nonNull(memberRequestUpdateVm.getAddress()) &&
+            !oldMember.getEmail().equals(memberRequestUpdateVm.getEmail())) {
             update = true;
-            oldMember.setEmail(memberRequestVm.getEmail());
+            oldMember.setEmail(memberRequestUpdateVm.getEmail());
         }
-        if (!oldMember.getPhone().equals(memberRequestVm.getPhone())) {
+        if (Objects.nonNull(memberRequestUpdateVm.getPhone()) &&
+            !oldMember.getPhone().equals(memberRequestUpdateVm.getPhone())) {
             update = true;
-            oldMember.setPhone(memberRequestVm.getPhone());
+            oldMember.setPhone(memberRequestUpdateVm.getPhone());
         }
-        if (!oldMember.getAddress().equals(memberRequestVm.getAddress())) {
+        if (Objects.nonNull(memberRequestUpdateVm.getAddress()) &&
+            !oldMember.getAddress().equals(memberRequestUpdateVm.getAddress())) {
             update = true;
-            oldMember.setAddress(memberRequestVm.getAddress());
+            oldMember.setAddress(memberRequestUpdateVm.getAddress());
         }
-        if (!oldMember.getMemberShipEndDate().equals(memberRequestVm.getMemberShipEndDate())) {
+        if (Objects.nonNull(memberRequestUpdateVm.getMemberShipEndDate()) &&
+            !memberRequestUpdateVm.getMemberShipEndDate().isAfter(LocalDateTime.now())) {
+            throw new BadRequestException("memberShipEndDate must be after now");
+        }
+        if (Objects.nonNull(memberRequestUpdateVm.getMemberShipEndDate()) &&
+            !oldMember.getMemberShipEndDate().equals(memberRequestUpdateVm.getMemberShipEndDate())) {
             update = true;
-            oldMember.setMemberShipEndDate(memberRequestVm.getMemberShipEndDate());
+            oldMember.setMemberShipEndDate(memberRequestUpdateVm.getMemberShipEndDate());
+        }
+        if (!oldMember.getMemberShipStatus().equals(memberRequestUpdateVm.getMemberShipStatus())) {
+            update = true;
+            oldMember.setMemberShipStatus(memberRequestUpdateVm.getMemberShipStatus());
         }
         return update;
     }

@@ -22,5 +22,5 @@ public class MemberDto {
     private LocalDateTime memberShipStartDate;
     private LocalDateTime memberShipEndDate;
     @Enumerated(EnumType.STRING)
-    private MemberShipStatus memberShipStatus = MemberShipStatus.ACTIVE;
+    private MemberShipStatus memberShipStatus;
 }
