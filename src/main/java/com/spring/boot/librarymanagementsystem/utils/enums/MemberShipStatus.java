@@ -2,7 +2,7 @@ package com.spring.boot.librarymanagementsystem.utils.enums;
 
 public enum MemberShipStatus {
     ACTIVE("ACTIVE"),
-    NON_ACTIVE("NON-ACTIVE");
+    NON_ACTIVE("NON_ACTIVE");
 
     private final String status;
 
