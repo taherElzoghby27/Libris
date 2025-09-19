@@ -6,7 +6,7 @@ import com.spring.boot.librarymanagementsystem.exception.custom_exception.NotFou
 import com.spring.boot.librarymanagementsystem.mapper.RoleMapper;
 import com.spring.boot.librarymanagementsystem.repository.RoleRepo;
 import com.spring.boot.librarymanagementsystem.service.RoleService;
-import com.spring.boot.librarymanagementsystem.utils.RoleType;
+import com.spring.boot.librarymanagementsystem.utils.enums.RoleType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

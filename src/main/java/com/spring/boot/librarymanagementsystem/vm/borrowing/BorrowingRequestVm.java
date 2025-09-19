@@ -1,7 +1,7 @@
 package com.spring.boot.librarymanagementsystem.vm.borrowing;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.spring.boot.librarymanagementsystem.utils.BorrowingStatus;
+import com.spring.boot.librarymanagementsystem.utils.enums.BorrowingStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

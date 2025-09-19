@@ -1,6 +1,6 @@
 package com.spring.boot.librarymanagementsystem.dto;
 
-import com.spring.boot.librarymanagementsystem.utils.RoleType;
+import com.spring.boot.librarymanagementsystem.utils.enums.RoleType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;

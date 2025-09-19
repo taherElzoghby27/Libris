@@ -1,4 +1,4 @@
-package com.spring.boot.librarymanagementsystem.utils;
+package com.spring.boot.librarymanagementsystem.utils.enums;
 
 public enum MemberShipStatus {
     ACTIVE("ACTIVE"),

@@ -1,7 +1,7 @@
 package com.spring.boot.librarymanagementsystem.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.spring.boot.librarymanagementsystem.utils.BorrowingStatus;
+import com.spring.boot.librarymanagementsystem.utils.enums.BorrowingStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

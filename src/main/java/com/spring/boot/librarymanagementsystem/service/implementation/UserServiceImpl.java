@@ -12,7 +12,7 @@ import com.spring.boot.librarymanagementsystem.repository.UserRepo;
 import com.spring.boot.librarymanagementsystem.service.PaginationService;
 import com.spring.boot.librarymanagementsystem.service.RoleService;
 import com.spring.boot.librarymanagementsystem.service.UserService;
-import com.spring.boot.librarymanagementsystem.utils.RoleType;
+import com.spring.boot.librarymanagementsystem.utils.enums.RoleType;
 import com.spring.boot.librarymanagementsystem.vm.user.UserSystemSignUpVm;
 import com.spring.boot.librarymanagementsystem.vm.user.UserUpdateVm;
 import com.spring.boot.librarymanagementsystem.vm.user.UsersResponseVm;
@@ -26,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

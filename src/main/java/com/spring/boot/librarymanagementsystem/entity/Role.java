@@ -1,6 +1,6 @@
 package com.spring.boot.librarymanagementsystem.entity;
 
-import com.spring.boot.librarymanagementsystem.utils.RoleType;
+import com.spring.boot.librarymanagementsystem.utils.enums.RoleType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

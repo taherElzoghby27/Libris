@@ -8,7 +8,7 @@ import com.spring.boot.librarymanagementsystem.mapper.MemberMapper;
 import com.spring.boot.librarymanagementsystem.repository.MemberRepo;
 import com.spring.boot.librarymanagementsystem.service.MemberService;
 import com.spring.boot.librarymanagementsystem.service.PaginationService;
-import com.spring.boot.librarymanagementsystem.utils.MemberShipStatus;
+import com.spring.boot.librarymanagementsystem.utils.enums.MemberShipStatus;
 import com.spring.boot.librarymanagementsystem.vm.member.MemberRequestUpdateVm;
 import com.spring.boot.librarymanagementsystem.vm.member.MemberRequestVm;
 import com.spring.boot.librarymanagementsystem.vm.member.MembersResponseVm;

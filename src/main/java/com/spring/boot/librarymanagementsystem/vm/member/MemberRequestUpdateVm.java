@@ -1,7 +1,7 @@
 package com.spring.boot.librarymanagementsystem.vm.member;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.spring.boot.librarymanagementsystem.utils.MemberShipStatus;
+import com.spring.boot.librarymanagementsystem.utils.enums.MemberShipStatus;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;

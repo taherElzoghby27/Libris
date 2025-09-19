@@ -16,7 +16,7 @@ import com.spring.boot.librarymanagementsystem.mapper.MemberMapper;
 import com.spring.boot.librarymanagementsystem.mapper.UserMapper;
 import com.spring.boot.librarymanagementsystem.repository.BorrowingRepo;
 import com.spring.boot.librarymanagementsystem.service.*;
-import com.spring.boot.librarymanagementsystem.utils.BorrowingStatus;
+import com.spring.boot.librarymanagementsystem.utils.enums.BorrowingStatus;
 import com.spring.boot.librarymanagementsystem.vm.activity.ActivityRequestVm;
 import com.spring.boot.librarymanagementsystem.vm.borrowing.BorrowingRequestVm;
 import com.spring.boot.librarymanagementsystem.vm.borrowing.BorrowingResponseVm;
