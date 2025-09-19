@@ -9,6 +9,7 @@ import com.spring.boot.librarymanagementsystem.vm.category.CategoryUpdateVm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -21,6 +22,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping("create-category")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<CategoryDto>> addCategory(@Valid @RequestBody CategoryRequestVm categoryRequestVm) {
         return new SuccessDto<>(
                 ResponseEntity.created(URI.create("create-category")).
@@ -29,6 +31,7 @@ public class CategoryController {
     }
 
     @PutMapping("update-category")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<CategoryDto>> updateCategory(@Valid @RequestBody CategoryUpdateVm categoryUpdateVm) {
         return new SuccessDto<>(
                 ResponseEntity.ok(categoryService.updateCategory(categoryUpdateVm))
@@ -36,6 +39,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("delete-category")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<String>> deleteCategory(@RequestParam Long id) {
         categoryService.deleteCategory(id);
         return new SuccessDto<>(

@@ -9,6 +9,7 @@ import com.spring.boot.librarymanagementsystem.vm.book.BooksResponseVm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -21,6 +22,7 @@ public class BookController {
     private final BookService bookService;
 
     @PostMapping("create-book")
+    @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
     public SuccessDto<ResponseEntity<BookDto>> addBook(@Valid @RequestBody BookRequestVm bookRequestVm) {
         return new SuccessDto<>(
                 ResponseEntity.created(URI.create("create-book"))
@@ -29,6 +31,7 @@ public class BookController {
     }
 
     @PutMapping("update-book")
+    @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
     public SuccessDto<ResponseEntity<BookDto>> updateBook(@Valid @RequestBody BookRequestUpdateVm bookRequestUpdateVm) {
         return new SuccessDto<>(
                 ResponseEntity.ok(bookService.updateBook(bookRequestUpdateVm))
@@ -51,6 +54,7 @@ public class BookController {
 
 
     @DeleteMapping("delete-book")
+    @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
     public SuccessDto<ResponseEntity<String>> deleteBook(@RequestParam Long id) {
         bookService.deleteBook(id);
         return new SuccessDto<>(

@@ -8,6 +8,7 @@ import com.spring.boot.librarymanagementsystem.vm.author.AuthorUpdateVm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -20,6 +21,7 @@ public class AuthorController {
 
 
     @PostMapping("create-author")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<AuthorDto>> addAuthor(@Valid @RequestBody AuthorDto authorDto) {
         return new SuccessDto<>(
                 ResponseEntity.created(URI.create("create-author")).
@@ -28,6 +30,7 @@ public class AuthorController {
     }
 
     @GetMapping("get-author")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<AuthorDto>> getAuthor(@RequestParam("author_id") Long authorId) {
         return new SuccessDto<>(
                 ResponseEntity.ok(authorService.getAuthor(authorId))
@@ -35,6 +38,7 @@ public class AuthorController {
     }
 
     @GetMapping("get-authors")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<AuthorResponseVm>> getAuthors(@RequestParam int page, @RequestParam int size) {
         return new SuccessDto<>(
                 ResponseEntity.ok(authorService.getAuthors(page, size))
@@ -42,6 +46,7 @@ public class AuthorController {
     }
 
     @PutMapping("update-author")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<AuthorDto>> updateAuthor(@Valid @RequestBody AuthorUpdateVm authorUpdateVm) {
         return new SuccessDto<>(
                 ResponseEntity.ok(authorService.updateAuthor(authorUpdateVm))
@@ -49,6 +54,7 @@ public class AuthorController {
     }
 
     @DeleteMapping("delete-author")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<String>> deleteAuthor(@RequestParam Long id) {
         authorService.deleteAuthor(id);
         return new SuccessDto<>(

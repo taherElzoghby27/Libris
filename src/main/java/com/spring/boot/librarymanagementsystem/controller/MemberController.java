@@ -9,6 +9,7 @@ import com.spring.boot.librarymanagementsystem.vm.member.MembersResponseVm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -21,6 +22,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("create-member")
+    @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
     public SuccessDto<ResponseEntity<MemberDto>> addMember(@Valid @RequestBody MemberRequestVm memberRequestVm) {
         return new SuccessDto<>(
                 ResponseEntity.created(URI.create("create-member"))
@@ -43,6 +45,7 @@ public class MemberController {
     }
 
     @PutMapping("update-member")
+    @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
     public SuccessDto<ResponseEntity<MemberDto>> updateMember(@Valid @RequestBody MemberRequestUpdateVm memberRequestUpdateVm) {
         return new SuccessDto<>(
                 ResponseEntity.ok(memberService.updateMember(memberRequestUpdateVm))
@@ -50,6 +53,7 @@ public class MemberController {
     }
 
     @DeleteMapping("delete-member")
+    @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
     public SuccessDto<ResponseEntity<String>> deleteMember(@RequestParam Long id) {
         memberService.deleteMember(id);
         return new SuccessDto<>(
