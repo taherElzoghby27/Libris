@@ -24,7 +24,7 @@ public class AuthFilter extends OncePerRequestFilter {
     private TokenHandler tokenHandler;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException {
         try {
             //1- get token from headers
             String token = request.getHeader("Authorization");
@@ -32,6 +32,7 @@ public class AuthFilter extends OncePerRequestFilter {
             if (Objects.isNull(token) || !token.startsWith("Bearer ")) {
                 response.reset();
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setHeader("WWW-Authenticate", "Bearer");
                 return;
             }
             token = token.substring(7);
@@ -59,7 +60,8 @@ public class AuthFilter extends OncePerRequestFilter {
             //7- Continue with the filter chain
             filterChain.doFilter(request, response);
         } catch (Exception ex) {
-            throw new RuntimeException(ex.getMessage());
+            SecurityContextHolder.clearContext();
+            throw new ServletException("Authentication filter failed", ex);
         }
     }
 
