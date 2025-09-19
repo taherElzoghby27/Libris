@@ -33,9 +33,14 @@ public class Book extends BaseEntity<String> {
     private String isbn;
     @Column(nullable = false)
     private String edition;
-    @Column
-    @OneToMany(mappedBy = "book")
-    private List<BookImage> coverImages = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(
+            schema = "LIBRARY_SYSTEM",
+            name = "BOOK_COVER_IMAGES",
+            joinColumns = @JoinColumn(name = "book_id")
+    )
+    @Column(name = "image_url", nullable = false)
+    private List<String> coverImages = new ArrayList<>();
     @JoinColumn(nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Publisher publisher;
