@@ -1,4 +1,4 @@
-package com.spring.boot.librarymanagementsystem.vm;
+package com.spring.boot.librarymanagementsystem.vm.member;
 
 import com.spring.boot.librarymanagementsystem.utils.MemberShipStatus;
 import jakarta.persistence.EnumType;

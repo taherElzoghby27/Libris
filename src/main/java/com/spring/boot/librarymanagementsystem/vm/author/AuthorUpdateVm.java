@@ -1,4 +1,4 @@
-package com.spring.boot.librarymanagementsystem.vm;
+package com.spring.boot.librarymanagementsystem.vm.author;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

@@ -2,8 +2,8 @@ package com.spring.boot.librarymanagementsystem.mapper;
 
 import com.spring.boot.librarymanagementsystem.dto.CategoryDto;
 import com.spring.boot.librarymanagementsystem.entity.Category;
-import com.spring.boot.librarymanagementsystem.vm.CategoryRequestVm;
-import com.spring.boot.librarymanagementsystem.vm.CategoryResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.category.CategoryRequestVm;
+import com.spring.boot.librarymanagementsystem.vm.category.CategoryResponseVm;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

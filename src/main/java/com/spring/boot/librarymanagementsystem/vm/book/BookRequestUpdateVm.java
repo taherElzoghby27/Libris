@@ -1,5 +1,8 @@
-package com.spring.boot.librarymanagementsystem.vm;
+package com.spring.boot.librarymanagementsystem.vm.book;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,11 +15,13 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-public class BookResponseVm {
+public class BookRequestUpdateVm {
+    @NotNull(message = "id must be not null")
     private Long id;
     private String title;
     private String summary;
-    private String language;
+    @Min(value = 1000, message = "publication year at least be 1000")
+    @Max(value = 3000, message = "publication year at max be 3000")
     private Integer publicationYear;
     private String isbn;
     private String edition;

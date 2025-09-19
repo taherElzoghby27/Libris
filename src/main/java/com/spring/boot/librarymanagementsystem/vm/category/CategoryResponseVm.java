@@ -1,4 +1,4 @@
-package com.spring.boot.librarymanagementsystem.vm;
+package com.spring.boot.librarymanagementsystem.vm.category;
 
 import com.spring.boot.librarymanagementsystem.dto.CategoryDto;
 import lombok.AllArgsConstructor;

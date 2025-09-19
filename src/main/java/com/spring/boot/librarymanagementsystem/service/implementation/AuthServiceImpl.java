@@ -7,9 +7,9 @@ import com.spring.boot.librarymanagementsystem.exception.custom_exception.NotFou
 import com.spring.boot.librarymanagementsystem.mapper.UserMapper;
 import com.spring.boot.librarymanagementsystem.service.AuthService;
 import com.spring.boot.librarymanagementsystem.service.UserService;
-import com.spring.boot.librarymanagementsystem.vm.UserResponseVm;
-import com.spring.boot.librarymanagementsystem.vm.UserSystemLoginVm;
-import com.spring.boot.librarymanagementsystem.vm.UserSystemSignUpVm;
+import com.spring.boot.librarymanagementsystem.vm.user.UserResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.user.UserSystemLoginVm;
+import com.spring.boot.librarymanagementsystem.vm.user.UserSystemSignUpVm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

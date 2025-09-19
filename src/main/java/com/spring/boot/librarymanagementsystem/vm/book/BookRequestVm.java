@@ -1,4 +1,4 @@
-package com.spring.boot.librarymanagementsystem.vm;
+package com.spring.boot.librarymanagementsystem.vm.book;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Max;

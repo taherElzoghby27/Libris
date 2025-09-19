@@ -1,4 +1,4 @@
-package com.spring.boot.librarymanagementsystem.vm;
+package com.spring.boot.librarymanagementsystem.vm.publisher;
 
 import com.spring.boot.librarymanagementsystem.dto.BookDto;
 import lombok.AllArgsConstructor;

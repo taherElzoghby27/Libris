@@ -1,4 +1,4 @@
-package com.spring.boot.librarymanagementsystem.vm;
+package com.spring.boot.librarymanagementsystem.vm.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

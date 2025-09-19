@@ -1,8 +1,8 @@
 package com.spring.boot.librarymanagementsystem.service;
 
 import com.spring.boot.librarymanagementsystem.dto.PublisherDto;
-import com.spring.boot.librarymanagementsystem.vm.PublisherResponseVm;
-import com.spring.boot.librarymanagementsystem.vm.PublishersResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.publisher.PublisherResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.publisher.PublishersResponseVm;
 
 public interface PublisherService {
     PublisherDto createPublisher(PublisherDto publisherDto);

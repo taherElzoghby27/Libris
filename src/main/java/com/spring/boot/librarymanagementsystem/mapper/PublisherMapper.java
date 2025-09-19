@@ -2,7 +2,7 @@ package com.spring.boot.librarymanagementsystem.mapper;
 
 import com.spring.boot.librarymanagementsystem.dto.PublisherDto;
 import com.spring.boot.librarymanagementsystem.entity.Publisher;
-import com.spring.boot.librarymanagementsystem.vm.PublisherResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.publisher.PublisherResponseVm;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

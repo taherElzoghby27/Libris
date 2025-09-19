@@ -1,7 +1,7 @@
 package com.spring.boot.librarymanagementsystem.mapper;
 import com.spring.boot.librarymanagementsystem.dto.MemberDto;
 import com.spring.boot.librarymanagementsystem.entity.Member;
-import com.spring.boot.librarymanagementsystem.vm.MemberRequestVm;
+import com.spring.boot.librarymanagementsystem.vm.member.MemberRequestVm;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

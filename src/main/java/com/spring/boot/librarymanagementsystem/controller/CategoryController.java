@@ -3,8 +3,9 @@ package com.spring.boot.librarymanagementsystem.controller;
 import com.spring.boot.librarymanagementsystem.dto.CategoryDto;
 import com.spring.boot.librarymanagementsystem.dto.SuccessDto;
 import com.spring.boot.librarymanagementsystem.service.CategoryService;
-import com.spring.boot.librarymanagementsystem.vm.CategoryRequestVm;
-import com.spring.boot.librarymanagementsystem.vm.CategoryResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.category.CategoryRequestVm;
+import com.spring.boot.librarymanagementsystem.vm.category.CategoryResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.category.CategoryUpdateVm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +29,9 @@ public class CategoryController {
     }
 
     @PutMapping("update-category")
-    public SuccessDto<ResponseEntity<CategoryDto>> updateCategory(@Valid @RequestBody CategoryRequestVm categoryRequestVm) {
+    public SuccessDto<ResponseEntity<CategoryDto>> updateCategory(@Valid @RequestBody CategoryUpdateVm categoryUpdateVm) {
         return new SuccessDto<>(
-                ResponseEntity.ok(categoryService.updateCategory(categoryRequestVm))
+                ResponseEntity.ok(categoryService.updateCategory(categoryUpdateVm))
         );
     }
 

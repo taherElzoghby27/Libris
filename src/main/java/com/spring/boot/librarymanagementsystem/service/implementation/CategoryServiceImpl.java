@@ -7,8 +7,9 @@ import com.spring.boot.librarymanagementsystem.exception.custom_exception.NotFou
 import com.spring.boot.librarymanagementsystem.mapper.CategoryMapper;
 import com.spring.boot.librarymanagementsystem.repository.CategoryRepo;
 import com.spring.boot.librarymanagementsystem.service.CategoryService;
-import com.spring.boot.librarymanagementsystem.vm.CategoryRequestVm;
-import com.spring.boot.librarymanagementsystem.vm.CategoryResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.category.CategoryRequestVm;
+import com.spring.boot.librarymanagementsystem.vm.category.CategoryResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.category.CategoryUpdateVm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,27 +39,31 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto updateCategory(CategoryRequestVm categoryRequestVm) {
+    public CategoryDto updateCategory(CategoryUpdateVm categoryUpdateVm) {
         boolean update = false;
-        if (Objects.isNull(categoryRequestVm.getId())) {
-            throw new BadRequestException("id must be not empty");
-        }
-        CategoryDto oldCategoryDto = getCategory(categoryRequestVm.getId());
-        if (!oldCategoryDto.getName().equals(categoryRequestVm.getName())) {
-            update = true;
-            oldCategoryDto.setName(categoryRequestVm.getName());
-        }
-        if (Objects.nonNull(categoryRequestVm.getParent()) && !oldCategoryDto.getParent().getId().equals(categoryRequestVm.getParent())) {
-            update = true;
-            CategoryDto parent = getCategory(categoryRequestVm.getParent());
-            oldCategoryDto.setParent(parent);
-        }
+        CategoryDto oldCategoryDto = getCategory(categoryUpdateVm.getId());
+        update = updateData(categoryUpdateVm, oldCategoryDto, update);
         if (update) {
             Category category = CategoryMapper.INSTANCE.toCategory(oldCategoryDto);
             category = categoryRepo.save(category);
             return CategoryMapper.INSTANCE.toCategoryDto(category);
         }
         throw new BadRequestException("Data must be different");
+    }
+
+    private boolean updateData(CategoryUpdateVm categoryUpdateVm, CategoryDto oldCategoryDto, boolean update) {
+        if (categoryUpdateVm.getName() != null && !oldCategoryDto.getName().equals(categoryUpdateVm.getName())) {
+            update = true;
+            oldCategoryDto.setName(categoryUpdateVm.getName());
+        }
+        if ((Objects.nonNull(categoryUpdateVm.getParent()) && oldCategoryDto.getParent() == null) ||
+            (Objects.nonNull(categoryUpdateVm.getParent()) &&
+             !oldCategoryDto.getParent().getId().equals(categoryUpdateVm.getParent()))) {
+            update = true;
+            CategoryDto parent = getCategory(categoryUpdateVm.getParent());
+            oldCategoryDto.setParent(parent);
+        }
+        return update;
     }
 
     @Transactional

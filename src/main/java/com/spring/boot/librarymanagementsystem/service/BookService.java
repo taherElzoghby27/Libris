@@ -1,9 +1,9 @@
 package com.spring.boot.librarymanagementsystem.service;
 
 import com.spring.boot.librarymanagementsystem.dto.BookDto;
-import com.spring.boot.librarymanagementsystem.vm.BookRequestUpdateVm;
-import com.spring.boot.librarymanagementsystem.vm.BookRequestVm;
-import com.spring.boot.librarymanagementsystem.vm.BooksResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.book.BookRequestUpdateVm;
+import com.spring.boot.librarymanagementsystem.vm.book.BookRequestVm;
+import com.spring.boot.librarymanagementsystem.vm.book.BooksResponseVm;
 
 public interface BookService {
     BookDto addBook(BookRequestVm bookRequestVm);

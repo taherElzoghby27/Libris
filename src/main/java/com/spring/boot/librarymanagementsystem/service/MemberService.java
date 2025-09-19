@@ -1,9 +1,9 @@
 package com.spring.boot.librarymanagementsystem.service;
 
 import com.spring.boot.librarymanagementsystem.dto.MemberDto;
-import com.spring.boot.librarymanagementsystem.vm.MemberRequestUpdateVm;
-import com.spring.boot.librarymanagementsystem.vm.MemberRequestVm;
-import com.spring.boot.librarymanagementsystem.vm.MembersResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.member.MemberRequestUpdateVm;
+import com.spring.boot.librarymanagementsystem.vm.member.MemberRequestVm;
+import com.spring.boot.librarymanagementsystem.vm.member.MembersResponseVm;
 
 public interface MemberService {
     MemberDto addMember(MemberRequestVm memberRequestVm);

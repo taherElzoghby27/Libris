@@ -1,6 +1,6 @@
-package com.spring.boot.librarymanagementsystem.vm;
+package com.spring.boot.librarymanagementsystem.vm.user;
 
-import com.spring.boot.librarymanagementsystem.dto.PublisherDto;
+import com.spring.boot.librarymanagementsystem.dto.UserSystemDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-public class PublishersResponseVm {
-    private List<PublisherDto> publishers;
+public class UsersResponseVm {
+    private List<UserSystemDto> users;
     private Long size;
 }
