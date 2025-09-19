@@ -55,6 +55,6 @@ public class Book extends BaseEntity<String> {
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
-    @OneToMany(mappedBy = "books")
+    @OneToMany(mappedBy = "book")
     private List<Borrowing> borrowings;
 }

@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class Borrowing extends BaseEntity<String> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
-    private Book books;
+    private Book book;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private UserSystem issuedByUser;
