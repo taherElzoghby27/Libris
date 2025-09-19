@@ -27,8 +27,8 @@ public class Book extends BaseEntity<String> {
     private String summary;
     @Column(nullable = false)
     private String language;
-    @Column(nullable = false, length = 4)
-    private Long publicationYear;
+    @Column(nullable = false, precision = 4)
+    private Integer publicationYear;
     @Column(nullable = false, unique = true)
     private String isbn;
     @Column(nullable = false)
