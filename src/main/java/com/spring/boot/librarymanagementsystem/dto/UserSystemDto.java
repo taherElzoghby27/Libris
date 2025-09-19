@@ -22,6 +22,7 @@ public class UserSystemDto {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @NotEmpty(message = "full name must be not empty")
+    @JsonProperty("full_name")
     private String fullName;
     @Email(message = "email format")
     @NotEmpty(message = "email must be not empty")
