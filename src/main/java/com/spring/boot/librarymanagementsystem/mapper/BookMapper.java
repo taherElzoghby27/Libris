@@ -3,6 +3,7 @@ package com.spring.boot.librarymanagementsystem.mapper;
 import com.spring.boot.librarymanagementsystem.dto.BookDto;
 import com.spring.boot.librarymanagementsystem.entity.Book;
 import com.spring.boot.librarymanagementsystem.vm.BookRequestVm;
+import com.spring.boot.librarymanagementsystem.vm.BookResponseVm;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -18,6 +19,8 @@ public interface BookMapper {
     Book toBook(BookRequestVm vm);
 
     BookDto toBookDto(Book book);
+
+    BookResponseVm toBookResponseVm(Book book);
 
 
     Book toBook(BookDto bookDto);
