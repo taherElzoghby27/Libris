@@ -138,46 +138,48 @@ public class BorrowingServiceImpl implements BorrowingService {
         throw new BadRequestException("data must be different");
     }
 
-    private boolean updateData(BorrowingUpdateVm borrowingUpdateVm, Borrowing old, boolean update) {
+    private boolean updateData(BorrowingUpdateVm borrowingUpdateVm, Borrowing oldBorrowing, boolean update) {
         if (Objects.nonNull(borrowingUpdateVm.getIssuedAt()) &&
-            !old.getIssuedAt().equals(borrowingUpdateVm.getIssuedAt())) {
+            !oldBorrowing.getIssuedAt().equals(borrowingUpdateVm.getIssuedAt())) {
             update = true;
-            old.setIssuedAt(borrowingUpdateVm.getIssuedAt());
+            oldBorrowing.setIssuedAt(borrowingUpdateVm.getIssuedAt());
         }
         if (Objects.nonNull(borrowingUpdateVm.getDueDate()) &&
-            !old.getDueDate().equals(borrowingUpdateVm.getDueDate())) {
+            !oldBorrowing.getDueDate().equals(borrowingUpdateVm.getDueDate())) {
             update = true;
-            old.setDueDate(borrowingUpdateVm.getDueDate());
+            oldBorrowing.setDueDate(borrowingUpdateVm.getDueDate());
         }
         if (Objects.nonNull(borrowingUpdateVm.getReturnedAt()) &&
-            !borrowingUpdateVm.getReturnedAt().equals(old.getReturnedAt())) {
+            !borrowingUpdateVm.getReturnedAt().equals(oldBorrowing.getReturnedAt())) {
             update = true;
-            old.setReturnedAt(borrowingUpdateVm.getReturnedAt());
+            oldBorrowing.setReturnedAt(borrowingUpdateVm.getReturnedAt());
         }
         if (Objects.nonNull(borrowingUpdateVm.getBorrowingStatus()) &&
-            !old.getBorrowingStatus().equals(borrowingUpdateVm.getBorrowingStatus())) {
+            !oldBorrowing.getBorrowingStatus().equals(borrowingUpdateVm.getBorrowingStatus())) {
             update = true;
-            old.setBorrowingStatus(borrowingUpdateVm.getBorrowingStatus());
+            oldBorrowing.setBorrowingStatus(borrowingUpdateVm.getBorrowingStatus());
         }
         if (Objects.nonNull(borrowingUpdateVm.getBookId())) {
             BookDto bookDto = bookService.getBook(borrowingUpdateVm.getBookId());
-            old.setBook(BookMapper.INSTANCE.toBook(bookDto));
-            update = true;
-        }
-        if (Objects.nonNull(borrowingUpdateVm.getMember())) {
-            MemberDto memberDto = memberService.getMember(borrowingUpdateVm.getMember());
-            old.setMember(MemberMapper.INSTANCE.toMember(memberDto));
+            oldBorrowing.setBook(BookMapper.INSTANCE.toBook(bookDto));
             update = true;
         }
         if (Objects.nonNull(borrowingUpdateVm.getIssuedByUserId())) {
             UserSystemDto userSystemDto = userService.getUserById(borrowingUpdateVm.getIssuedByUserId());
-            old.setIssuedByUser(UserMapper.INSTANCE.toUserSystem(userSystemDto));
+            oldBorrowing.setIssuedByUser(UserMapper.INSTANCE.toUserSystem(userSystemDto));
             update = true;
         }
         if (Objects.nonNull(borrowingUpdateVm.getReturnedByUser())) {
             UserSystemDto userSystemDto = userService.getUserById(borrowingUpdateVm.getReturnedByUser());
-            old.setReturnedByUser(UserMapper.INSTANCE.toUserSystem(userSystemDto));
+            oldBorrowing.setReturnedByUser(UserMapper.INSTANCE.toUserSystem(userSystemDto));
             update = true;
+        }
+        if (oldBorrowing.getBorrowingStatus().equals(BorrowingStatus.RETURNED) && oldBorrowing.getReturnedByUser() == null) {
+            throw new BadRequestException("returnedByUser must be not null");
+        }
+        if (!(oldBorrowing.getReturnedAt().isAfter(oldBorrowing.getIssuedAt()) &&
+              oldBorrowing.getReturnedAt().isBefore(oldBorrowing.getDueDate()))) {
+            throw new BadRequestException("returned at must be after issued at and returned at must be before due date at");
         }
         return update;
     }

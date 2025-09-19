@@ -34,6 +34,7 @@ public class Borrowing extends BaseEntity<String> {
     @ManyToOne(fetch = FetchType.LAZY)
     private UserSystem returnedByUser;
     private LocalDateTime returnedAt;
+    @JoinColumn(nullable = false)
     @Enumerated(EnumType.STRING)
     private BorrowingStatus borrowingStatus;
     @ManyToOne

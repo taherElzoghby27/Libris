@@ -28,11 +28,11 @@ public class BorrowingRequestVm {
     @NotNull(message = "due date must be not null")
     @JsonProperty("due_date")
     private LocalDateTime dueDate;
-    @NotNull(message = "returned by user id must be not null")
     @JsonProperty("returned_by_user_id")
     private Long returnedByUser;
     private LocalDateTime returnedAt;
     @Enumerated(EnumType.STRING)
+    @JsonProperty("borrowing_status")
     private BorrowingStatus borrowingStatus;
     @NotNull(message = "member id must be not null")
     @JsonProperty("member_id")

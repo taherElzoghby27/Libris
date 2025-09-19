@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 public class BorrowingDto {
+    private Long id;
     private BookDto book;
     private UserSystemDto issuedByUser;
     private LocalDateTime issuedAt;

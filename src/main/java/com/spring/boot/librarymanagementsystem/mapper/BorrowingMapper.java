@@ -8,11 +8,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(uses = {MemberMapper.class})
 public interface BorrowingMapper {
     BorrowingMapper INSTANCE = Mappers.getMapper(BorrowingMapper.class);
 
-    @Mapping(target = "books", ignore = true)
+    @Mapping(target = "book", ignore = true)
     @Mapping(target = "member", ignore = true)
     @Mapping(target = "issuedByUser", ignore = true)
     @Mapping(target = "returnedByUser", ignore = true)
@@ -20,6 +20,7 @@ public interface BorrowingMapper {
 
     BorrowingDto toBorrowingDto(Borrowing borrowing);
 
+    @Mapping(source = "member", target = "memberId", qualifiedByName = "memberToId")
     BorrowingResponseVm toBorrowingResponseVm(Borrowing borrowing);
 
     Borrowing toBorrowing(BorrowingDto borrowingDto);

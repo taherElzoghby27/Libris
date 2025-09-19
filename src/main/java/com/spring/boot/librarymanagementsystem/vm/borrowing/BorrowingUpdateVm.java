@@ -32,6 +32,4 @@ public class BorrowingUpdateVm {
     private LocalDateTime returnedAt;
     @Enumerated(EnumType.STRING)
     private BorrowingStatus borrowingStatus;
-    @JsonProperty("member_id")
-    private Long member;
 }
