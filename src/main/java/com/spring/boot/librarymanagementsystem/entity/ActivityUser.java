@@ -15,14 +15,9 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 public class ActivityUser extends BaseEntity<String> {
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private UserSystem user;
-
+    private String username;
     @Column(length = 200, nullable = false)
     private String action;
-
     @Column(name = "entity_name", length = 100, nullable = false)
     private String entityName;
     @Column(columnDefinition = "jsonb")

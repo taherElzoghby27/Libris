@@ -16,6 +16,7 @@ import com.spring.boot.librarymanagementsystem.mapper.CategoryMapper;
 import com.spring.boot.librarymanagementsystem.mapper.PublisherMapper;
 import com.spring.boot.librarymanagementsystem.repository.BookRepo;
 import com.spring.boot.librarymanagementsystem.service.*;
+import com.spring.boot.librarymanagementsystem.vm.activity.ActivityRequestVm;
 import com.spring.boot.librarymanagementsystem.vm.book.BookRequestUpdateVm;
 import com.spring.boot.librarymanagementsystem.vm.book.BookRequestVm;
 import com.spring.boot.librarymanagementsystem.vm.book.BooksResponseVm;
@@ -23,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -37,7 +39,9 @@ public class BookServiceImpl implements BookService {
     private final PublisherService publisherService;
     private final CategoryService categoryService;
     private final AuthorService authorService;
+    private final ActivityUserService activityUserService;
 
+    @Transactional
     @Override
     public BookDto addBook(BookRequestVm bookRequestVm) {
         if (Objects.nonNull(bookRequestVm.getId())) {
@@ -47,10 +51,18 @@ public class BookServiceImpl implements BookService {
         // set relations
         setRelationsToBook(bookRequestVm, book);
         book = bookRepo.save(book);
+        //add log
+        activityUserService.addActivity(new ActivityRequestVm(
+                        "created book",
+                        "Book",
+                        book.getTitle() + " created by " + book.getCreatedBy()
+                )
+        );
         return BookMapper.INSTANCE.toBookDto(book);
     }
 
-    private void setRelationsToBook(BookRequestVm bookRequestVm, Book book) {
+    @Transactional(propagation = Propagation.REQUIRED)
+    protected void setRelationsToBook(BookRequestVm bookRequestVm, Book book) {
         //get publisher
         PublisherDto publisherDto = publisherService.getPublisher(bookRequestVm.getPublisherId());
         Publisher publisher = PublisherMapper.INSTANCE.toPublisher(publisherDto);
@@ -100,10 +112,18 @@ public class BookServiceImpl implements BookService {
             throw new BadRequestException("id must be not null");
         }
         // ensure exists
-        getBook(id);
+        BookDto bookDto = getBook(id);
         bookRepo.deleteById(id);
+        //add log
+        activityUserService.addActivity(new ActivityRequestVm(
+                        "deleted book",
+                        "Book",
+                        bookDto.getTitle() + " deleted"
+                )
+        );
     }
 
+    @Transactional
     @Override
     public BookDto updateBook(BookRequestUpdateVm bookRequestUpdateVm) {
         boolean update = false;
@@ -112,12 +132,20 @@ public class BookServiceImpl implements BookService {
         update = updateData(bookRequestUpdateVm, oldBook, update);
         if (update) {
             oldBook = bookRepo.save(oldBook);
+            //add log
+            activityUserService.addActivity(new ActivityRequestVm(
+                            "updated book",
+                            "Book",
+                            oldBook.getTitle() + " updated"
+                    )
+            );
             return BookMapper.INSTANCE.toBookDto(oldBook);
         }
         throw new BadRequestException("data must be different");
     }
 
-    private static boolean updateData(BookRequestUpdateVm bookRequestUpdateVm, Book oldBook, boolean update) {
+    @Transactional(propagation = Propagation.REQUIRED)
+    protected boolean updateData(BookRequestUpdateVm bookRequestUpdateVm, Book oldBook, boolean update) {
         if (Objects.nonNull(bookRequestUpdateVm.getTitle()) && !oldBook.getTitle().equals(bookRequestUpdateVm.getTitle())) {
             update = true;
             oldBook.setTitle(bookRequestUpdateVm.getTitle());

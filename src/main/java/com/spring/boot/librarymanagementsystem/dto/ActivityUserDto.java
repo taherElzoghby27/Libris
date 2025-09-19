@@ -14,8 +14,6 @@ import java.time.LocalDateTime;
 @Getter
 public class ActivityUserDto {
     private Long id;
-    @JsonProperty("user")
-    private UserSystemDto user;
     private String action;
     @JsonProperty("entity")
     private String entityName;
