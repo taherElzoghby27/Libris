@@ -15,12 +15,9 @@ import com.spring.boot.librarymanagementsystem.mapper.BorrowingMapper;
 import com.spring.boot.librarymanagementsystem.mapper.MemberMapper;
 import com.spring.boot.librarymanagementsystem.mapper.UserMapper;
 import com.spring.boot.librarymanagementsystem.repository.BorrowingRepo;
-import com.spring.boot.librarymanagementsystem.service.BookService;
-import com.spring.boot.librarymanagementsystem.service.BorrowingService;
-import com.spring.boot.librarymanagementsystem.service.MemberService;
-import com.spring.boot.librarymanagementsystem.service.PaginationService;
-import com.spring.boot.librarymanagementsystem.service.UserService;
+import com.spring.boot.librarymanagementsystem.service.*;
 import com.spring.boot.librarymanagementsystem.utils.BorrowingStatus;
+import com.spring.boot.librarymanagementsystem.vm.activity.ActivityRequestVm;
 import com.spring.boot.librarymanagementsystem.vm.borrowing.BorrowingRequestVm;
 import com.spring.boot.librarymanagementsystem.vm.borrowing.BorrowingResponseVm;
 import com.spring.boot.librarymanagementsystem.vm.borrowing.BorrowingUpdateVm;
@@ -29,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -43,7 +41,9 @@ public class BorrowingServiceImpl implements BorrowingService {
     private final BookService bookService;
     private final MemberService memberService;
     private final UserService userService;
+    private final ActivityUserService activityUserService;
 
+    @Transactional
     @Override
     public BorrowingDto addBorrowing(BorrowingRequestVm borrowingRequestVm) {
         validateDates(borrowingRequestVm.getIssuedAt(), borrowingRequestVm.getDueDate(), borrowingRequestVm.getReturnedAt());
@@ -52,10 +52,18 @@ public class BorrowingServiceImpl implements BorrowingService {
         setRelations(borrowingRequestVm, borrowing);
         borrowing.setBorrowingStatus(BorrowingStatus.BORROWED);
         borrowing = borrowingRepo.save(borrowing);
+        //add log
+        activityUserService.addActivity(new ActivityRequestVm(
+                        "add borrowing book",
+                        "Borrowing",
+                        borrowing.getBook() + " borrowed by " + borrowing.getMember().getFullName()
+                )
+        );
         return BorrowingMapper.INSTANCE.toBorrowingDto(borrowing);
     }
 
-    private void setRelations(BorrowingRequestVm vm, Borrowing borrowing) {
+    @Transactional(propagation = Propagation.REQUIRED)
+    protected void setRelations(BorrowingRequestVm vm, Borrowing borrowing) {
         // book
         BookDto bookDto = bookService.getBook(vm.getBookId());
         Book book = BookMapper.INSTANCE.toBook(bookDto);
@@ -133,12 +141,20 @@ public class BorrowingServiceImpl implements BorrowingService {
         update = updateData(borrowingUpdateVm, oldBorrowing, update);
         if (update) {
             oldBorrowing = borrowingRepo.save(oldBorrowing);
+            //add log
+            activityUserService.addActivity(new ActivityRequestVm(
+                            "update borrowing book",
+                            "Borrowing",
+                            oldBorrowing.getBook() + " borrowed by " + oldBorrowing.getMember().getFullName() + " status : " + oldBorrowing.getBorrowingStatus()
+                    )
+            );
             return BorrowingMapper.INSTANCE.toBorrowingDto(oldBorrowing);
         }
         throw new BadRequestException("data must be different");
     }
 
-    private boolean updateData(BorrowingUpdateVm borrowingUpdateVm, Borrowing oldBorrowing, boolean update) {
+    @Transactional(propagation = Propagation.REQUIRED)
+    protected boolean updateData(BorrowingUpdateVm borrowingUpdateVm, Borrowing oldBorrowing, boolean update) {
         if (Objects.nonNull(borrowingUpdateVm.getIssuedAt()) &&
             !oldBorrowing.getIssuedAt().equals(borrowingUpdateVm.getIssuedAt())) {
             update = true;
@@ -191,7 +207,14 @@ public class BorrowingServiceImpl implements BorrowingService {
             throw new BadRequestException("id must be not null");
         }
         // ensure exists
-        getBorrowingWithoutData(id);
+        BorrowingResponseVm borrowingResponseVm = getBorrowingWithoutData(id);
         borrowingRepo.deleteById(id);
+        //add log
+        activityUserService.addActivity(new ActivityRequestVm(
+                        "delete borrowing book",
+                        "Borrowing",
+                        borrowingResponseVm.getBorrowingStatus().toString()
+                )
+        );
     }
 }

@@ -22,6 +22,7 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepo categoryRepo;
 
+    @Transactional
     @Override
     public CategoryDto createCategory(CategoryRequestVm categoryRequestVm) {
         if (Objects.nonNull(categoryRequestVm.getId())) {
