@@ -82,18 +82,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto getBookWithData(Long id) {
-        if (Objects.isNull(id)) {
-            throw new BadRequestException("id must be not null");
-        }
-        Optional<Book> result = bookRepo.findByIdWithData(id);
-        if (result.isEmpty()) {
-            throw new NotFoundResourceException("book not found");
-        }
-        return BookMapper.INSTANCE.toBookDto(result.get());
-    }
-
-    @Override
     public BookDto getBook(Long id) {
         if (Objects.isNull(id)) {
             throw new BadRequestException("id must be not null");

@@ -42,13 +42,6 @@ public class BookController {
         );
     }
 
-    @GetMapping("get-book-with-data")
-    public SuccessDto<ResponseEntity<BookDto>> getBookWithData(@RequestParam Long id) {
-        return new SuccessDto<>(
-                ResponseEntity.ok(bookService.getBookWithData(id))
-        );
-    }
-
     @GetMapping("get-books")
     public SuccessDto<ResponseEntity<BooksResponseVm>> getBooks(@RequestParam int page, @RequestParam int size) {
         return new SuccessDto<>(
