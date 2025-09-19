@@ -21,8 +21,8 @@ public class BookRequestUpdateVm {
     private String title;
     @NotEmpty(message = "summary must be not empty")
     private String summary;
-    @Min(value = 1000, message = "min must be 1000")
-    @Max(value = 3000, message = "max must be 3000")
+    @Min(value = 1000, message = "publication year at least be 1000")
+    @Max(value = 3000, message = "publication year at max be 3000")
     private Integer publicationYear;
     @NotEmpty(message = "isbn must be not empty")
     private String isbn;

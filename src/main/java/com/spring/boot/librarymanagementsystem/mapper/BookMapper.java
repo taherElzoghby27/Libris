@@ -17,8 +17,6 @@ public interface BookMapper {
     @Mapping(target = "borrowings", ignore = true)
     Book toBook(BookRequestVm vm);
 
-    // Map category to categoryId in DTO
-    @Mapping(source = "category.id", target = "categoryId")
     BookDto toBookDto(Book book);
 
 

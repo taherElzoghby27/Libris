@@ -37,7 +37,6 @@ public class BookServiceImpl implements BookService {
     private final PublisherService publisherService;
     private final CategoryService categoryService;
     private final AuthorService authorService;
-    private final BookService bookService;
 
     @Override
     public BookDto addBook(BookRequestVm bookRequestVm) {
@@ -61,6 +60,9 @@ public class BookServiceImpl implements BookService {
         Category category = CategoryMapper.INSTANCE.toCategory(categoryDto);
         book.setCategory(category);
         //get authors
+        if (bookRequestVm.getAuthorsId().isEmpty()) {
+            throw new BadRequestException("authors id must be not empty");
+        }
         List<AuthorDto> authorsDto = bookRequestVm.getAuthorsId().stream().map(authorService::getAuthor).toList();
         List<Author> authors = authorsDto.stream().map(AuthorMapper.INSTANCE::toAuthor).toList();
         book.setAuthors(authors);

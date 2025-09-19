@@ -25,8 +25,8 @@ public class BookRequestVm {
     private String summary;
     @NotEmpty(message = "language must be not empty")
     private String language;
-    @Min(value = 1000, message = "min must be 1000")
-    @Max(value = 3000, message = "max must be 3000")
+    @Min(value = 1000, message = "publication year at least be 1000")
+    @Max(value = 3000, message = "publication year at max be 3000")
     private Integer publicationYear;
     @NotEmpty(message = "isbn must be not empty")
     private String isbn;
@@ -38,7 +38,7 @@ public class BookRequestVm {
     private Long publisherId;
     @NotNull(message = "author id must be not empty")
     @JsonProperty("authors_id")
-    private List<Long> authorsId = new ArrayList<>();
+    private List<Long> authorsId;
     @NotNull(message = "category id must be not empty")
     @JsonProperty("category_id")
     private Long categoryId;
