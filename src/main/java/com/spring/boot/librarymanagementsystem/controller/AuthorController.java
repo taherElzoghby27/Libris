@@ -28,7 +28,7 @@ public class AuthorController {
     }
 
     @GetMapping("get-author")
-    public SuccessDto<ResponseEntity<AuthorDto>> getAuthor(@RequestParam Long authorId) {
+    public SuccessDto<ResponseEntity<AuthorDto>> getAuthor(@RequestParam("author_id") Long authorId) {
         return new SuccessDto<>(
                 ResponseEntity.ok(authorService.getAuthor(authorId))
         );
