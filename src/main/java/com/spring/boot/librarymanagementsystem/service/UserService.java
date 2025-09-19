@@ -6,6 +6,8 @@ import com.spring.boot.librarymanagementsystem.vm.user.UserSystemSignUpVm;
 import com.spring.boot.librarymanagementsystem.vm.user.UserUpdateVm;
 import com.spring.boot.librarymanagementsystem.vm.user.UsersResponseVm;
 
+import java.util.List;
+
 public interface UserService {
     UsersResponseVm getUsers(int page, int size);
 
@@ -21,5 +23,5 @@ public interface UserService {
 
     void deleteUserSystem(Long id);
 
-    UserSystemDto updateRolesForUserSystem(Long userId, RoleDto roleDto);
+    UserSystemDto updateRolesForUserSystem(Long userId, List<String> roleName);
 }

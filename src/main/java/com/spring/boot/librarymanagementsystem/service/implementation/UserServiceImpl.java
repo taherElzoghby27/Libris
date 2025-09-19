@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -146,20 +147,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserSystemDto updateRolesForUserSystem(Long userId, RoleDto roleDto) {
+    public UserSystemDto updateRolesForUserSystem(Long userId, List<String> roleNames) {
         if (Objects.isNull(userId)) {
             throw new BadRequestException("user id must be not null");
         }
         UserSystemDto userSystemDto = getUserById(userId);
-        roleDto = roleService.getRoleByName(roleDto.getRole().toString());
+        List<RoleDto> rolesDto = roleNames.stream().map(roleService::getRoleByName).toList();
         //user system dto to user system
         UserSystem userSystem = UserMapper.INSTANCE.toUserSystem(userSystemDto);
         //role dto to role
-        Role role = RoleMapper.INSTANCE.toRole(roleDto);
+        List<Role> newRoles = rolesDto.stream().map(RoleMapper.INSTANCE::toRole).toList();
         //get roles for this user
-        List<Role> roles = userSystem.getRoles();
-        roles.add(role);
-        userSystem.setRoles(roles);
+        userSystem.setRoles(newRoles);
         userSystem = userRepo.save(userSystem);
         return UserMapper.INSTANCE.toUserDto(userSystem);
     }
