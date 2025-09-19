@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService {
             userSystemDto.setFullName(userSystemSignUpVm.getFullName());
         }
         if (!update) {
-            throw new NotFoundResourceException("data must be different");
+            throw new BadRequestException("data must be different");
         }
         UserSystem userSystem = UserMapper.INSTANCE.toUserSystem(userSystemDto);
         userSystem.setPassword(passwordEncoder.encode(userSystem.getPassword()));

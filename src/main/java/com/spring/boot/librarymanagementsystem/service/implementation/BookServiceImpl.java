@@ -117,7 +117,7 @@ public class BookServiceImpl implements BookService {
             oldBook = bookRepo.save(oldBook);
             return BookMapper.INSTANCE.toBookDto(oldBook);
         }
-        throw new NotFoundResourceException("data must be different");
+        throw new BadRequestException("data must be different");
     }
 
     private static boolean updateData(BookRequestUpdateVm bookRequestUpdateVm, Book oldBook, boolean update) {

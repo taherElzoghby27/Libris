@@ -4,6 +4,7 @@ import com.spring.boot.librarymanagementsystem.dto.AuthorDto;
 import com.spring.boot.librarymanagementsystem.dto.SuccessDto;
 import com.spring.boot.librarymanagementsystem.service.AuthorService;
 import com.spring.boot.librarymanagementsystem.vm.AuthorResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.AuthorUpdateVm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -41,9 +42,9 @@ public class AuthorController {
     }
 
     @PutMapping("update-author")
-    public SuccessDto<ResponseEntity<AuthorDto>> updateAuthor(@Valid @RequestBody AuthorDto authorDto) {
+    public SuccessDto<ResponseEntity<AuthorDto>> updateAuthor(@Valid @RequestBody AuthorUpdateVm authorUpdateVm) {
         return new SuccessDto<>(
-                ResponseEntity.ok(authorService.updateAuthor(authorDto))
+                ResponseEntity.ok(authorService.updateAuthor(authorUpdateVm))
         );
     }
 

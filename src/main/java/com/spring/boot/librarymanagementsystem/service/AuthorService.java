@@ -2,6 +2,7 @@ package com.spring.boot.librarymanagementsystem.service;
 
 import com.spring.boot.librarymanagementsystem.dto.AuthorDto;
 import com.spring.boot.librarymanagementsystem.vm.AuthorResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.AuthorUpdateVm;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface AuthorService {
 
     AuthorDto createAuthor(AuthorDto authorDto);
 
-    AuthorDto updateAuthor(AuthorDto authorDto);
+    AuthorDto updateAuthor(AuthorUpdateVm authorUpdateVm);
 
     void deleteAuthor(Long id);
 }

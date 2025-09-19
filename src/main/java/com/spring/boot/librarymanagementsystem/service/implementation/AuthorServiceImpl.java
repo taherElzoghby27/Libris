@@ -9,6 +9,7 @@ import com.spring.boot.librarymanagementsystem.repository.AuthorRepo;
 import com.spring.boot.librarymanagementsystem.service.AuthorService;
 import com.spring.boot.librarymanagementsystem.service.PaginationService;
 import com.spring.boot.librarymanagementsystem.vm.AuthorResponseVm;
+import com.spring.boot.librarymanagementsystem.vm.AuthorUpdateVm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -58,14 +59,27 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorDto updateAuthor(AuthorDto authorDto) {
-        if (Objects.isNull(authorDto.getId())) {
-            throw new BadRequestException("id must be not null");
+    public AuthorDto updateAuthor(AuthorUpdateVm authorUpdateVm) {
+        boolean update = false;
+        AuthorDto oldAuthorDto = getAuthor(authorUpdateVm.getId());
+        if (authorUpdateVm.getFirstName() != null && !oldAuthorDto.getFirstName().equals(authorUpdateVm.getFirstName())) {
+            update = true;
+            oldAuthorDto.setFirstName(authorUpdateVm.getFirstName());
         }
-        getAuthor(authorDto.getId());
-        Author author = AuthorMapper.INSTANCE.toAuthor(authorDto);
-        author = authorRepo.save(author);
-        return AuthorMapper.INSTANCE.toAuthorDto(author);
+        if (authorUpdateVm.getLastName() != null && !oldAuthorDto.getLastName().equals(authorUpdateVm.getLastName())) {
+            update = true;
+            authorUpdateVm.setLastName(authorUpdateVm.getLastName());
+        }
+        if (authorUpdateVm.getBio() != null && !oldAuthorDto.getBio().equals(authorUpdateVm.getBio())) {
+            update = true;
+            oldAuthorDto.setBio(authorUpdateVm.getBio());
+        }
+        if (update) {
+            Author author = AuthorMapper.INSTANCE.toAuthor(oldAuthorDto);
+            author = authorRepo.save(author);
+            return AuthorMapper.INSTANCE.toAuthorDto(author);
+        }
+        throw new BadRequestException("data must be different");
     }
 
     @Override

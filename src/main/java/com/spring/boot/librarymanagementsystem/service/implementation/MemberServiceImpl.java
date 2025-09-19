@@ -82,7 +82,7 @@ public class MemberServiceImpl implements MemberService {
             oldMember = memberRepo.save(oldMember);
             return MemberMapper.INSTANCE.toMemberDto(oldMember);
         }
-        throw new NotFoundResourceException("data must be different");
+        throw new BadRequestException("data must be different");
     }
 
     private static boolean updateData(MemberRequestUpdateVm memberRequestUpdateVm, Member oldMember, boolean update) {

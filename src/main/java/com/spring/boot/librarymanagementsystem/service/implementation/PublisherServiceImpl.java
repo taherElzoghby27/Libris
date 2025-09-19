@@ -78,7 +78,7 @@ public class PublisherServiceImpl implements PublisherService {
             publisher = publisherRepo.save(publisher);
             return PublisherMapper.INSTANCE.toPublisherDto(publisher);
         }
-        throw new NotFoundResourceException("data must be different");
+        throw new BadRequestException("data must be different");
     }
 
     @Override

@@ -58,7 +58,7 @@ public class CategoryServiceImpl implements CategoryService {
             category = categoryRepo.save(category);
             return CategoryMapper.INSTANCE.toCategoryDto(category);
         }
-        throw new NotFoundResourceException("Data must be different");
+        throw new BadRequestException("Data must be different");
     }
 
     @Transactional
