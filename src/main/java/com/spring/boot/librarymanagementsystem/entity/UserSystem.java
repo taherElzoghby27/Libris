@@ -1,17 +1,14 @@
 package com.spring.boot.librarymanagementsystem.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(
-        schema = "LIBRARY_SYSTEM",
+        //schema = "LIBRARY_SYSTEM",
         indexes = {
                 @Index(name = "idx_user_username", columnList = "username"),
                 @Index(name = "idx_user_email", columnList = "email")
@@ -21,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
 public class UserSystem extends BaseEntity<String> {
     @Column(unique = true, nullable = false)
     private String username;
