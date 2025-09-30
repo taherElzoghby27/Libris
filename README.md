@@ -114,6 +114,34 @@ Server will start on `http://localhost:9090`.
 
 Each controller returns a `SuccessDto<ResponseEntity<...>>` wrapper for consistency.
 
+## Testing
+
+The project includes comprehensive test coverage using JUnit 5, Mockito, and Testcontainers. Tests are organized in the `src/test` directory mirroring the main source structure.
+
+### Test Structure
+```
+src/test/java/com/spring/boot/librarymanagementsystem/
+  controller/           # Controller integration tests
+  service/              # Service layer unit tests
+  repository/           # Repository layer tests
+  utils/                # Test utilities and helpers
+  integration/          # Integration tests
+  config/               # Test configurations
+```
+
+### Running Tests
+
+Run all tests:
+```bash
+mvn test
+```
+
+Run specific test class:
+```bash
+mvn test -Dtest=BookServiceTest
+```
+
+
 ## ERD
 
 ![System ERD](docs/erd.png)
