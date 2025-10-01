@@ -7,7 +7,7 @@ import org.springframework.data.domain.AuditorAware;
 import java.util.Optional;
 
 @TestConfiguration
-public class TestAuditConfig {
+public class TestConfig {
     @Bean
     public AuditorAware<String> auditorProvider() {
         // Always return "test-user" during tests

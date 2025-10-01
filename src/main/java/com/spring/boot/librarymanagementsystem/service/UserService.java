@@ -1,6 +1,4 @@
 package com.spring.boot.librarymanagementsystem.service;
-
-import com.spring.boot.librarymanagementsystem.dto.RoleDto;
 import com.spring.boot.librarymanagementsystem.dto.UserSystemDto;
 import com.spring.boot.librarymanagementsystem.vm.user.UserSystemSignUpVm;
 import com.spring.boot.librarymanagementsystem.vm.user.UserUpdateVm;

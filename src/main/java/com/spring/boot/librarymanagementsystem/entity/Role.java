@@ -2,10 +2,7 @@ package com.spring.boot.librarymanagementsystem.entity;
 
 import com.spring.boot.librarymanagementsystem.utils.enums.RoleType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +11,8 @@ import java.util.List;
 @Table(schema = "LIBRARY_SYSTEM", name = "role_entity")
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
+@Data
+@Builder
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,15 +3,12 @@ package com.spring.boot.librarymanagementsystem.dto;
 import com.spring.boot.librarymanagementsystem.utils.enums.RoleType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
+@Data
+@Builder
 public class RoleDto {
     private Long id;
     @Enumerated(EnumType.STRING)

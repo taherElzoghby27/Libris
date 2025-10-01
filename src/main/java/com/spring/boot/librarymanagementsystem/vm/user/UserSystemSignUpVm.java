@@ -3,15 +3,13 @@ package com.spring.boot.librarymanagementsystem.vm.user;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
 public class UserSystemSignUpVm {
     private Long id;
     @NotEmpty(message = "username must be not empty")

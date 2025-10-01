@@ -1,6 +1,6 @@
 package com.spring.boot.librarymanagementsystem.repository;
 
-import com.spring.boot.librarymanagementsystem.config.TestAuditConfig;
+import com.spring.boot.librarymanagementsystem.config.TestConfig;
 import com.spring.boot.librarymanagementsystem.entity.UserSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@Import(TestAuditConfig.class)
+@Import(TestConfig.class)
 public class UserRepoTest {
     @Autowired
     private UserRepo userRepo;
