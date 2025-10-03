@@ -2,6 +2,7 @@ package com.spring.boot.librarymanagementsystem.service;
 
 import com.spring.boot.librarymanagementsystem.dto.RoleDto;
 import com.spring.boot.librarymanagementsystem.dto.UserSystemDto;
+import com.spring.boot.librarymanagementsystem.entity.Role;
 import com.spring.boot.librarymanagementsystem.entity.UserSystem;
 import com.spring.boot.librarymanagementsystem.exception.custom_exception.NotFoundResourceException;
 import com.spring.boot.librarymanagementsystem.repository.RoleRepo;
@@ -27,7 +28,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -225,6 +226,52 @@ public class UserServiceTest {
                 () -> assertEquals(user.getEmail(), userUpdated.getEmail())
         );
     }
+
+    @Test
+    public void givenUser_whenDeleteIt_thenVerifyItCalled() {
+        userService.deleteUserSystem(1L);
+        verify(userRepo, times(1)).deleteById(1L);
+    }
+
+    @Test
+    public void givenUser_whenDeleteIt_thenNoFoundIt() {
+        //arrange
+        when(userRepo.findById(1L)).thenReturn(Optional.empty());
+        //act
+        userService.deleteUserSystem(1L);
+        //assert
+        assertThrows(NotFoundResourceException.class, () -> userService.getUserById(1L));
+    }
+
+    @Test
+    public void givenUser_whenUpdateUserRoles_thenUpdated() {
+        //arrange
+        Role roleStaff = Role.builder().role(RoleType.STAFF).build();
+        RoleDto roleDtoAdmin = RoleDto.builder().role(RoleType.ADMIN).build();
+        RoleDto roleDtoStaff = RoleDto.builder().role(RoleType.STAFF).build();
+        UserSystem user = UserSystem.builder()
+                .email("tataamen678@gmail.com")
+                .fullName("taher amin")
+                .username("taherElzoghby27")
+                .password("taherTAHER152002")
+                .roles(List.of(roleStaff))
+                .build();
+        user.setId(1L);
+        when(userRepo.findById(1L)).thenReturn(Optional.of(user));
+        when(roleService.getRoleByName("ADMIN")).thenReturn(roleDtoAdmin);
+        when(roleService.getRoleByName("STAFF")).thenReturn(roleDtoStaff);
+        when(userRepo.save(Mockito.any(UserSystem.class)))
+                .then(
+                        invocationOnMock -> invocationOnMock.getArgument(0)
+                );
+        //act
+        UserSystemDto userUpdated = userService.updateRolesForUserSystem(1L, List.of("ADMIN", "STAFF"));
+        //assert
+        assertAll("User fields updated",
+                () -> assertNotEquals(user.getRoles().size(), userUpdated.getRoles().size())
+        );
+    }
+
 
 }
 

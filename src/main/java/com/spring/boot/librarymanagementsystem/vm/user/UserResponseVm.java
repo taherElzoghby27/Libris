@@ -1,15 +1,12 @@
 package com.spring.boot.librarymanagementsystem.vm.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
+@Data
+@Builder
 public class UserResponseVm {
     private Long id;
     private String username;

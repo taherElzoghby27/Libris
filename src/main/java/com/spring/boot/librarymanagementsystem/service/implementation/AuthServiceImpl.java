@@ -28,13 +28,11 @@ public class AuthServiceImpl implements AuthService {
             throw new NotFoundResourceException("User not enabled");
         }
         boolean emailValid = userSystemDto.getEmail().equals(userSystemLoginVm.getEmail());
-        System.out.println(userSystemDto.getPassword());
         boolean passwordValid = passwordEncoder.matches(userSystemLoginVm.getPassword(), userSystemDto.getPassword());
         if (emailValid && passwordValid) {
             UserResponseVm userResponseVm = UserMapper.INSTANCE.toUserResponseVm(userSystemDto);
             userResponseVm.setToken(tokenHandler.generateToken(userSystemDto));
             return userResponseVm;
-
         }
         throw new InvalidCredentialsException("Invalid credentials");
     }
