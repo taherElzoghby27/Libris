@@ -13,6 +13,8 @@ import com.spring.boot.librarymanagementsystem.utils.enums.RoleType;
 import com.spring.boot.librarymanagementsystem.vm.user.UserSystemSignUpVm;
 import com.spring.boot.librarymanagementsystem.vm.user.UserUpdateVm;
 import com.spring.boot.librarymanagementsystem.vm.user.UsersResponseVm;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -44,12 +46,33 @@ public class UserServiceTest {
     private RoleServiceImpl roleService;
     @Mock
     private PasswordEncoder passwordEncoder; // fake bean
+    private static UserSystem user1;
+    private static UserSystem user2;
+
+    @BeforeEach
+    public void setUp() {
+        user1 = UserSystem.builder()
+                .email("tataamen678@gmail.com")
+                .fullName("taher amin")
+                .username("taherElzoghby27")
+                .password("taherTAHER152002").build();
+        user2 = UserSystem.builder()
+                .email("tataamen12@gmail.com")
+                .fullName("taher amin")
+                .username("taherElzoghby272")
+                .password("taherTAHER152002").build();
+        user1.setId(1L);
+    }
+
+    @AfterAll
+    public static void tearDown() {
+        user1 = null;
+        user2 = null;
+    }
 
     @Test
     public void givenUsers_whenGetAllUsers_thenGetAllUsers() {
         //arrange
-        UserSystem user1 = UserSystem.builder().email("tataamen678@gmail.com").fullName("taher amin").username("taherElzoghby27").password("taherTAHER152002").build();
-        UserSystem user2 = UserSystem.builder().email("tataamen12@gmail.com").fullName("taher amin").username("taherElzoghby272").password("taherTAHER152002").build();
         List<UserSystem> users = List.of(user1, user2);
         Pageable pageable = PaginationService.getPageable(1, 10);
         Page<UserSystem> page = new PageImpl<>(users, pageable, users.size());
@@ -74,20 +97,14 @@ public class UserServiceTest {
     @Test
     public void givenUser_whenGetUserByEmail_thenGetIt() {
         //arrange
-        UserSystem user = UserSystem.builder()
-                .email("tataamen678@gmail.com")
-                .fullName("taher amin")
-                .username("taherElzoghby27")
-                .password("taherTAHER152002")
-                .build();
-        when(userRepo.findByEmail(user.getEmail())).thenReturn(user);
+        when(userRepo.findByEmail(user1.getEmail())).thenReturn(user1);
         //act
-        UserSystemDto userFounded = userService.getUserByEmail(user.getEmail());
+        UserSystemDto userFounded = userService.getUserByEmail(user1.getEmail());
         //assert
         assertAll("must equal",
-                () -> assertEquals(user.getUsername(), userFounded.getUsername()),
-                () -> assertEquals(user.getFullName(), userFounded.getFullName()),
-                () -> assertEquals(user.getEmail(), userFounded.getEmail())
+                () -> assertEquals(user1.getUsername(), userFounded.getUsername()),
+                () -> assertEquals(user1.getFullName(), userFounded.getFullName()),
+                () -> assertEquals(user1.getEmail(), userFounded.getEmail())
         );
     }
 
@@ -106,20 +123,14 @@ public class UserServiceTest {
     @Test
     public void givenUser_whenGetUserByUsername_thenGetIt() {
         //arrange
-        UserSystem user = UserSystem.builder()
-                .email("tataamen678@gmail.com")
-                .fullName("taher amin")
-                .username("taherElzoghby27")
-                .password("taherTAHER152002")
-                .build();
-        when(userRepo.findByUsername(user.getUsername())).thenReturn(user);
+        when(userRepo.findByUsername(user1.getUsername())).thenReturn(user1);
         //act
-        UserSystemDto userFounded = userService.getUserByUsername(user.getUsername());
+        UserSystemDto userFounded = userService.getUserByUsername(user1.getUsername());
         //assert
         assertAll("must equal",
-                () -> assertEquals(user.getUsername(), userFounded.getUsername()),
-                () -> assertEquals(user.getFullName(), userFounded.getFullName()),
-                () -> assertEquals(user.getEmail(), userFounded.getEmail())
+                () -> assertEquals(user1.getUsername(), userFounded.getUsername()),
+                () -> assertEquals(user1.getFullName(), userFounded.getFullName()),
+                () -> assertEquals(user1.getEmail(), userFounded.getEmail())
         );
     }
 
@@ -137,22 +148,15 @@ public class UserServiceTest {
 
     @Test
     public void givenUser_whenGetUserById_thenGetIt() {
-        //arrange
-        UserSystem user = UserSystem.builder()
-                .email("tataamen678@gmail.com")
-                .fullName("taher amin")
-                .username("taherElzoghby27")
-                .password("taherTAHER152002")
-                .build();
-        user.setId(1L);
-        when(userRepo.findById(user.getId())).thenReturn(Optional.of(user));
+        //arrange1
+        when(userRepo.findById(user1.getId())).thenReturn(Optional.of(user1));
         //act
-        UserSystemDto userFounded = userService.getUserById(user.getId());
+        UserSystemDto userFounded = userService.getUserById(user1.getId());
         //assert
         assertAll("must equal",
-                () -> assertEquals(user.getUsername(), userFounded.getUsername()),
-                () -> assertEquals(user.getFullName(), userFounded.getFullName()),
-                () -> assertEquals(user.getEmail(), userFounded.getEmail())
+                () -> assertEquals(user1.getUsername(), userFounded.getUsername()),
+                () -> assertEquals(user1.getFullName(), userFounded.getFullName()),
+                () -> assertEquals(user1.getEmail(), userFounded.getEmail())
         );
     }
 
@@ -171,12 +175,6 @@ public class UserServiceTest {
     @Test
     public void givenUser_whenCreateUser_thenCreated() {
         //arrange
-        UserSystem user = UserSystem.builder()
-                .email("tataamen678@gmail.com")
-                .fullName("taher amin")
-                .username("taherElzoghby27")
-                .password("taherTAHER152002")
-                .build();
         UserSystemSignUpVm userSystemSignUpVm = UserSystemSignUpVm.builder()
                 .email("tataamen678@gmail.com")
                 .fullName("taher amin")
@@ -191,22 +189,15 @@ public class UserServiceTest {
         UserSystemDto userCreated = userService.createUserSystem(userSystemSignUpVm);
         //assert
         assertAll("must equal",
-                () -> assertEquals(user.getUsername(), userCreated.getUsername()),
-                () -> assertEquals(user.getFullName(), userCreated.getFullName()),
-                () -> assertEquals(user.getEmail(), userCreated.getEmail())
+                () -> assertEquals(user1.getUsername(), userCreated.getUsername()),
+                () -> assertEquals(user1.getFullName(), userCreated.getFullName()),
+                () -> assertEquals(user1.getEmail(), userCreated.getEmail())
         );
     }
 
     @Test
     public void givenUser_whenUpdateUser_thenUpdated() {
         //arrange
-        UserSystem user = UserSystem.builder()
-                .email("tataamen678@gmail.com")
-                .fullName("taher amin")
-                .username("taherElzoghby27")
-                .password("taherTAHER152002")
-                .build();
-        user.setId(1L);
         UserUpdateVm userUpdateVm = UserUpdateVm.builder()
                 .id(1L)
                 .email("tataamen678@gmail.com")
@@ -214,16 +205,16 @@ public class UserServiceTest {
                 .username("taherElzoghby27")
                 .password("taherTAHER152002")
                 .build();
-        when(userRepo.findById(1L)).thenReturn(Optional.of(user));
+        when(userRepo.findById(1L)).thenReturn(Optional.of(user1));
         when(userRepo.save(Mockito.any(UserSystem.class)))
                 .then(invocationOnMock -> invocationOnMock.getArgument(0));
         //act
         UserSystemDto userUpdated = userService.updateUserSystem(userUpdateVm);
         //assert
         assertAll("User fields updated",
-                () -> assertEquals(user.getUsername(), userUpdated.getUsername()),
-                () -> assertNotEquals(user.getFullName(), userUpdated.getFullName()),
-                () -> assertEquals(user.getEmail(), userUpdated.getEmail())
+                () -> assertEquals(user1.getUsername(), userUpdated.getUsername()),
+                () -> assertNotEquals(user1.getFullName(), userUpdated.getFullName()),
+                () -> assertEquals(user1.getEmail(), userUpdated.getEmail())
         );
     }
 
@@ -249,15 +240,8 @@ public class UserServiceTest {
         Role roleStaff = Role.builder().role(RoleType.STAFF).build();
         RoleDto roleDtoAdmin = RoleDto.builder().role(RoleType.ADMIN).build();
         RoleDto roleDtoStaff = RoleDto.builder().role(RoleType.STAFF).build();
-        UserSystem user = UserSystem.builder()
-                .email("tataamen678@gmail.com")
-                .fullName("taher amin")
-                .username("taherElzoghby27")
-                .password("taherTAHER152002")
-                .roles(List.of(roleStaff))
-                .build();
-        user.setId(1L);
-        when(userRepo.findById(1L)).thenReturn(Optional.of(user));
+        user1.setRoles(List.of(roleStaff));
+        when(userRepo.findById(1L)).thenReturn(Optional.of(user1));
         when(roleService.getRoleByName("ADMIN")).thenReturn(roleDtoAdmin);
         when(roleService.getRoleByName("STAFF")).thenReturn(roleDtoStaff);
         when(userRepo.save(Mockito.any(UserSystem.class)))
@@ -268,10 +252,8 @@ public class UserServiceTest {
         UserSystemDto userUpdated = userService.updateRolesForUserSystem(1L, List.of("ADMIN", "STAFF"));
         //assert
         assertAll("User fields updated",
-                () -> assertNotEquals(user.getRoles().size(), userUpdated.getRoles().size())
+                () -> assertNotEquals(user1.getRoles().size(), userUpdated.getRoles().size())
         );
     }
-
-
 }
 
