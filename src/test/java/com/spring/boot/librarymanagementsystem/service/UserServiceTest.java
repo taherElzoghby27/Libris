@@ -135,7 +135,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void givenNoUser_whenGetUserByUsername_thenNotFound() {
+    public void givenNonExistingUser_whenGetUserByUsername_thenNotFound() {
         //arrange
         when(userRepo.findByUsername("taheramin"))
                 .thenThrow(new NotFoundResourceException("user not found"));
@@ -161,7 +161,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void givenNoUser_whenGetUserById_thenNotFound() {
+    public void givenNonExisting_whenGetUserById_thenNotFound() {
         //arrange
         when(userRepo.findById(1L))
                 .thenThrow(new NotFoundResourceException("user not found"));
