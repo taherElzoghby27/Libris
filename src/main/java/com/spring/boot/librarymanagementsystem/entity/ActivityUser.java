@@ -15,11 +15,13 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 public class ActivityUser extends BaseEntity<String> {
+    @Column(name = "username")
     private String username;
-    @Column(length = 200, nullable = false)
+    @Column(name = "action",length = 200, nullable = false)
     private String action;
     @Column(name = "entity_name", length = 100, nullable = false)
     private String entityName;
+    @Column(name = "details")
     private String details;
     @Column(name = "timestamp", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private LocalDateTime timestamp = LocalDateTime.now();

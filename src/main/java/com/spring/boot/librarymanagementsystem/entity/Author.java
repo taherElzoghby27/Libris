@@ -24,11 +24,11 @@ import java.util.List;
 @Setter
 @Getter
 public class Author extends BaseEntity<String> {
-    @Column(nullable = false)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
-    @Column(nullable = false)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
-    @Column(nullable = false)
+    @Column(name = "bio", nullable = false)
     private String bio;
     @ManyToMany(mappedBy = "authors")
     private List<Book> books = new ArrayList<>();

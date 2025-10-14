@@ -20,14 +20,15 @@ import java.util.List;
 @Getter
 @Builder
 public class UserSystem extends BaseEntity<String> {
-    @Column(unique = true, nullable = false)
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
-    @Column(nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
-    @Column(nullable = false)
+    @Column(name = "full_name", nullable = false)
     private String fullName;
-    @Column(unique = true, nullable = false)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
+    @Column(name = "enabled")
     private Boolean enabled = true;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

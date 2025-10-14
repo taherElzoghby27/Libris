@@ -27,12 +27,13 @@ public class Borrowing extends BaseEntity<String> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private UserSystem issuedByUser;
-    @Column(nullable = false)
+    @Column(name = "issued_at",nullable = false)
     private LocalDateTime issuedAt;
-    @Column(nullable = false)
+    @Column(name = "due_date",nullable = false)
     private LocalDateTime dueDate;
     @ManyToOne(fetch = FetchType.LAZY)
     private UserSystem returnedByUser;
+    @Column(name = "returned_at")
     private LocalDateTime returnedAt;
     @JoinColumn(nullable = false)
     @Enumerated(EnumType.STRING)

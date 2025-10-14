@@ -21,7 +21,7 @@ import java.util.List;
 @Setter
 @Getter
 public class Category extends BaseEntity<String> {
-    @Column(nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
     @JoinColumn(name = "parent_id", foreignKey = @ForeignKey(name = "fk_category_parent"))
     @ManyToOne

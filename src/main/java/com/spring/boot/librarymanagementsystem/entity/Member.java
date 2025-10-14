@@ -24,19 +24,20 @@ import java.util.List;
 @Setter
 @Getter
 public class Member extends BaseEntity<String> {
-    @Column(nullable = false)
+    @Column(name = "full_name", nullable = false)
     private String fullName;
-    @Column(unique = true, nullable = false)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
-    @Column(unique = true, nullable = false)
+    @Column(name = "phone", unique = true, nullable = false)
     private String phone;
-    @Column(nullable = false)
+    @Column(name = "address", nullable = false)
     private String address;
-    @Column(nullable = false)
+    @Column(name = "member_ship_start_date", nullable = false)
     private LocalDateTime memberShipStartDate = LocalDateTime.now();
-    @Column(nullable = false)
+    @Column(name = "member_ship_end_date", nullable = false)
     private LocalDateTime memberShipEndDate;
     @Enumerated(EnumType.STRING)
+    @Column(name = "member_ship_status")
     private MemberShipStatus memberShipStatus;
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Borrowing> borrowingList = new ArrayList<>();

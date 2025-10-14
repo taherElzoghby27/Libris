@@ -21,9 +21,9 @@ import java.util.List;
 @Setter
 @Getter
 public class Publisher extends BaseEntity<String> {
-    @Column(nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
-    @Column(nullable = false)
+    @Column(name = "address", nullable = false)
     private String address;
     @OneToMany(mappedBy = "publisher")
     private List<Book> book = new ArrayList<>();

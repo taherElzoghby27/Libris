@@ -17,7 +17,7 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, unique = true)
+    @Column(name = "role", nullable = false, unique = true)
     @Enumerated(EnumType.STRING)
     private RoleType role;
     @ManyToMany(mappedBy = "roles")

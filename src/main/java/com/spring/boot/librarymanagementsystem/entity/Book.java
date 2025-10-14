@@ -21,17 +21,17 @@ import java.util.List;
 @Setter
 @Getter
 public class Book extends BaseEntity<String> {
-    @Column(nullable = false)
+    @Column(name = "title",nullable = false)
     private String title;
-    @Column(nullable = false)
+    @Column(name = "summary",nullable = false)
     private String summary;
-    @Column(nullable = false)
+    @Column(name = "language",nullable = false)
     private String language;
-    @Column(nullable = false, precision = 4)
+    @Column(name = "publication_year",nullable = false, precision = 4)
     private Integer publicationYear;
-    @Column(nullable = false, unique = true)
+    @Column(name = "isbn",nullable = false, unique = true)
     private String isbn;
-    @Column(nullable = false)
+    @Column(name = "edition",nullable = false)
     private String edition;
     @ElementCollection
     @CollectionTable(
