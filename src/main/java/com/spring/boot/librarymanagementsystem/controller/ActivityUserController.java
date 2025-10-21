@@ -18,7 +18,7 @@ public class ActivityUserController {
 
     private final ActivityUserService activityUserService;
 
-    @GetMapping("/get-activities")
+    @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<ActivitiesResponseVm>> getActivities(@RequestParam int page, @RequestParam int size) {
         return new SuccessDto<>(

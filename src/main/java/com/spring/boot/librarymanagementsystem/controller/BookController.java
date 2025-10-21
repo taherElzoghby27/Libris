@@ -21,7 +21,7 @@ public class BookController {
 
     private final BookService bookService;
 
-    @PostMapping("create-book")
+    @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
     public SuccessDto<ResponseEntity<BookDto>> addBook(@Valid @RequestBody BookRequestVm bookRequestVm) {
         return new SuccessDto<>(
@@ -30,7 +30,7 @@ public class BookController {
         );
     }
 
-    @PutMapping("update-book")
+    @PutMapping
     @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
     public SuccessDto<ResponseEntity<BookDto>> updateBook(@Valid @RequestBody BookRequestUpdateVm bookRequestUpdateVm) {
         return new SuccessDto<>(
@@ -38,14 +38,14 @@ public class BookController {
         );
     }
 
-    @GetMapping("get-book")
-    public SuccessDto<ResponseEntity<BookDto>> getBook(@RequestParam Long id) {
+    @GetMapping("/{id}")
+    public SuccessDto<ResponseEntity<BookDto>> getBook(@PathVariable Long id) {
         return new SuccessDto<>(
                 ResponseEntity.ok(bookService.getBook(id))
         );
     }
 
-    @GetMapping("get-books")
+    @GetMapping
     public SuccessDto<ResponseEntity<BooksResponseVm>> getBooks(@RequestParam int page, @RequestParam int size) {
         return new SuccessDto<>(
                 ResponseEntity.ok(bookService.getAllBooksWithoutData(page, size))
@@ -53,7 +53,7 @@ public class BookController {
     }
 
 
-    @DeleteMapping("delete-book")
+    @DeleteMapping
     @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
     public SuccessDto<ResponseEntity<String>> deleteBook(@RequestParam Long id) {
         bookService.deleteBook(id);

@@ -1,7 +1,6 @@
 package com.spring.boot.librarymanagementsystem.controller;
 
 import com.spring.boot.librarymanagementsystem.dto.SuccessDto;
-import com.spring.boot.librarymanagementsystem.dto.RoleDto;
 import com.spring.boot.librarymanagementsystem.dto.UserSystemDto;
 import com.spring.boot.librarymanagementsystem.service.AuthService;
 import com.spring.boot.librarymanagementsystem.service.UserService;
@@ -35,44 +34,44 @@ public class AuthController {
         return new SuccessDto<>(ResponseEntity.created(URI.create("sign-up")).body(response));
     }
 
-    @GetMapping("/get-users")
+    @GetMapping("/users")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<UsersResponseVm>> getUsers(@RequestParam int page, @RequestParam int size) {
         return new SuccessDto<>(ResponseEntity.ok(userService.getUsers(page, size)));
     }
 
-    @GetMapping("/get-user-by-email")
+    @GetMapping("/user/{email}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public SuccessDto<ResponseEntity<UserSystemDto>> getUserByEmail(@RequestParam String email) {
+    public SuccessDto<ResponseEntity<UserSystemDto>> getUserByEmail(@PathVariable String email) {
         return new SuccessDto<>(ResponseEntity.ok(userService.getUserByEmail(email)));
     }
 
-    @GetMapping("/get-user-by-username")
+    @GetMapping("/user/{username}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public SuccessDto<ResponseEntity<UserSystemDto>> getUserByUsername(@RequestParam String username) {
+    public SuccessDto<ResponseEntity<UserSystemDto>> getUserByUsername(@PathVariable String username) {
         return new SuccessDto<>(ResponseEntity.ok(userService.getUserByUsername(username)));
     }
 
-    @GetMapping("/get-user-by-id")
+    @GetMapping("/user/{id}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public SuccessDto<ResponseEntity<UserSystemDto>> getUserById(@RequestParam Long id) {
+    public SuccessDto<ResponseEntity<UserSystemDto>> getUserById(@PathVariable Long id) {
         return new SuccessDto<>(ResponseEntity.ok(userService.getUserById(id)));
     }
 
-    @PutMapping("/update-user")
+    @PutMapping("/user")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<UserSystemDto>> updateUser(@Valid @RequestBody UserUpdateVm updateVm) {
         return new SuccessDto<>(ResponseEntity.ok(userService.updateUserSystem(updateVm)));
     }
 
-    @DeleteMapping("/delete-user")
+    @DeleteMapping("/user")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<String>> deleteUser(@RequestParam Long id) {
         userService.deleteUserSystem(id);
         return new SuccessDto<>(ResponseEntity.ok("User deleted successfully"));
     }
 
-    @PutMapping("/update-user-roles")
+    @PutMapping("/roles")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<UserSystemDto>> updateUserRoles(@RequestParam("user_id") Long userId,
                                                                      @RequestParam("roles_name") List<String> roleNames) {

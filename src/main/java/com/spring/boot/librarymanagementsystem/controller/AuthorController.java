@@ -20,7 +20,7 @@ public class AuthorController {
     private final AuthorService authorService;
 
 
-    @PostMapping("create-author")
+    @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<AuthorDto>> addAuthor(@Valid @RequestBody AuthorDto authorDto) {
         return new SuccessDto<>(
@@ -29,15 +29,15 @@ public class AuthorController {
         );
     }
 
-    @GetMapping("get-author")
+    @GetMapping("/{authorId}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public SuccessDto<ResponseEntity<AuthorDto>> getAuthor(@RequestParam("author_id") Long authorId) {
+    public SuccessDto<ResponseEntity<AuthorDto>> getAuthor(@PathVariable Long authorId) {
         return new SuccessDto<>(
                 ResponseEntity.ok(authorService.getAuthor(authorId))
         );
     }
 
-    @GetMapping("get-authors")
+    @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<AuthorResponseVm>> getAuthors(@RequestParam int page, @RequestParam int size) {
         return new SuccessDto<>(
@@ -45,7 +45,7 @@ public class AuthorController {
         );
     }
 
-    @PutMapping("update-author")
+    @PutMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<AuthorDto>> updateAuthor(@Valid @RequestBody AuthorUpdateVm authorUpdateVm) {
         return new SuccessDto<>(
@@ -53,7 +53,7 @@ public class AuthorController {
         );
     }
 
-    @DeleteMapping("delete-author")
+    @DeleteMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<String>> deleteAuthor(@RequestParam Long id) {
         authorService.deleteAuthor(id);

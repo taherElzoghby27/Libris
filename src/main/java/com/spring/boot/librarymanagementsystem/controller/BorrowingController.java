@@ -22,7 +22,7 @@ public class BorrowingController {
 
     private final BorrowingService borrowingService;
 
-    @PostMapping("/create-borrowing")
+    @PostMapping
     public SuccessDto<ResponseEntity<BorrowingDto>> addBorrowing(@Valid @RequestBody BorrowingRequestVm vm) {
         return new SuccessDto<>(
                 ResponseEntity.created(URI.create("create-borrowing"))
@@ -30,28 +30,28 @@ public class BorrowingController {
         );
     }
 
-    @PutMapping("/update-borrowing")
+    @PutMapping
     public SuccessDto<ResponseEntity<BorrowingDto>> updateBorrowing(@Valid @RequestBody BorrowingUpdateVm vm) {
         return new SuccessDto<>(
                 ResponseEntity.ok(borrowingService.updateBorrowing(vm))
         );
     }
 
-    @GetMapping("/get-borrowing")
-    public SuccessDto<ResponseEntity<BorrowingResponseVm>> getBorrowingWithoutData(@RequestParam Long id) {
+    @GetMapping("/{id}")
+    public SuccessDto<ResponseEntity<BorrowingResponseVm>> getBorrowingWithoutData(@PathVariable Long id) {
         return new SuccessDto<>(
                 ResponseEntity.ok(borrowingService.getBorrowingWithoutData(id))
         );
     }
 
-    @GetMapping("/get-borrowing-with-data")
-    public SuccessDto<ResponseEntity<BorrowingDto>> getBorrowingWithData(@RequestParam Long id) {
+    @GetMapping("/get-borrowing-with-data/{id}")
+    public SuccessDto<ResponseEntity<BorrowingDto>> getBorrowingWithData(@PathVariable Long id) {
         return new SuccessDto<>(
                 ResponseEntity.ok(borrowingService.getBorrowingWithData(id))
         );
     }
 
-    @GetMapping("/get-borrowings")
+    @GetMapping
     public SuccessDto<ResponseEntity<BorrowingsResponseVm>> getAllBorrowings(@RequestParam int page, @RequestParam int size) {
         return new SuccessDto<>(
                 ResponseEntity.ok(borrowingService.getAllBorrowings(page, size))

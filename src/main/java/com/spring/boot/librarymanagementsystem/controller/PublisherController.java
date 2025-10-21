@@ -21,7 +21,7 @@ public class PublisherController {
 
     private final PublisherService publisherService;
 
-    @PostMapping("create-publisher")
+    @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<PublisherDto>> addPublisher(@Valid @RequestBody PublisherDto publisherDto) {
         return new SuccessDto<>(
@@ -30,28 +30,28 @@ public class PublisherController {
         );
     }
 
-    @GetMapping("get-publisher")
-    public SuccessDto<ResponseEntity<PublisherDto>> getPublisher(@RequestParam Long id) {
+    @GetMapping("/{id}")
+    public SuccessDto<ResponseEntity<PublisherDto>> getPublisher(@PathVariable Long id) {
         return new SuccessDto<>(
                 ResponseEntity.ok(publisherService.getPublisher(id))
         );
     }
 
-    @GetMapping("get-publisher-with-books")
-    public SuccessDto<ResponseEntity<PublisherResponseVm>> getPublisherWithBooks(@RequestParam Long id) {
+    @GetMapping("/get-publisher-with-books/{id}")
+    public SuccessDto<ResponseEntity<PublisherResponseVm>> getPublisherWithBooks(@PathVariable Long id) {
         return new SuccessDto<>(
                 ResponseEntity.ok(publisherService.getPublisherWithBooks(id))
         );
     }
 
-    @GetMapping("get-publishers")
+    @GetMapping
     public SuccessDto<ResponseEntity<PublishersResponseVm>> getPublishers(@RequestParam int page, @RequestParam int size) {
         return new SuccessDto<>(
                 ResponseEntity.ok(publisherService.getPublishers(page, size))
         );
     }
 
-    @PutMapping("update-publisher")
+    @PutMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<PublisherDto>> updatePublisher(@Valid @RequestBody PublisherUpdateVm publisherUpdateVm) {
         return new SuccessDto<>(
@@ -59,7 +59,7 @@ public class PublisherController {
         );
     }
 
-    @DeleteMapping("delete-publisher")
+    @DeleteMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<String>> deletePublisher(@RequestParam Long id) {
         publisherService.deletePublisher(id);

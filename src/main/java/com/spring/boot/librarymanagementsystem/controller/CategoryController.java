@@ -21,7 +21,7 @@ import java.util.List;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @PostMapping("create-category")
+    @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<CategoryDto>> addCategory(@Valid @RequestBody CategoryRequestVm categoryRequestVm) {
         return new SuccessDto<>(
@@ -30,7 +30,7 @@ public class CategoryController {
         );
     }
 
-    @PutMapping("update-category")
+    @PutMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<CategoryDto>> updateCategory(@Valid @RequestBody CategoryUpdateVm categoryUpdateVm) {
         return new SuccessDto<>(
@@ -38,7 +38,7 @@ public class CategoryController {
         );
     }
 
-    @DeleteMapping("delete-category")
+    @DeleteMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<String>> deleteCategory(@RequestParam Long id) {
         categoryService.deleteCategory(id);
@@ -47,22 +47,22 @@ public class CategoryController {
         );
     }
 
-    @GetMapping("get-category")
-    public SuccessDto<ResponseEntity<CategoryDto>> getCategory(@RequestParam Long id) {
+    @GetMapping("/{id}")
+    public SuccessDto<ResponseEntity<CategoryDto>> getCategory(@PathVariable Long id) {
         return new SuccessDto<>(
                 ResponseEntity.ok(categoryService.getCategory(id))
         );
     }
 
-    @GetMapping("get-categories")
+    @GetMapping
     public SuccessDto<ResponseEntity<List<CategoryDto>>> getCategories() {
         return new SuccessDto<>(
                 ResponseEntity.ok(categoryService.getAllCategories())
         );
     }
 
-    @GetMapping("get-category-with-books")
-    public SuccessDto<ResponseEntity<CategoryResponseVm>> getCategoryWithBooks(@RequestParam Long id) {
+    @GetMapping("/get-category-with-books/{id}")
+    public SuccessDto<ResponseEntity<CategoryResponseVm>> getCategoryWithBooks(@PathVariable Long id) {
         return new SuccessDto<>(
                 ResponseEntity.ok(categoryService.getCategoryWithBooks(id))
         );

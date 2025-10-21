@@ -21,7 +21,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @PostMapping("create-member")
+    @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
     public SuccessDto<ResponseEntity<MemberDto>> addMember(@Valid @RequestBody MemberRequestVm memberRequestVm) {
         return new SuccessDto<>(
@@ -30,21 +30,21 @@ public class MemberController {
         );
     }
 
-    @GetMapping("get-member")
-    public SuccessDto<ResponseEntity<MemberDto>> getMember(@RequestParam Long id) {
+    @GetMapping("/{id}")
+    public SuccessDto<ResponseEntity<MemberDto>> getMember(@PathVariable Long id) {
         return new SuccessDto<>(
                 ResponseEntity.ok(memberService.getMember(id))
         );
     }
 
-    @GetMapping("get-members")
+    @GetMapping
     public SuccessDto<ResponseEntity<MembersResponseVm>> getMembers(@RequestParam int page, @RequestParam int size) {
         return new SuccessDto<>(
                 ResponseEntity.ok(memberService.getMembers(page, size))
         );
     }
 
-    @PutMapping("update-member")
+    @PutMapping
     @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
     public SuccessDto<ResponseEntity<MemberDto>> updateMember(@Valid @RequestBody MemberRequestUpdateVm memberRequestUpdateVm) {
         return new SuccessDto<>(
@@ -52,7 +52,7 @@ public class MemberController {
         );
     }
 
-    @DeleteMapping("delete-member")
+    @DeleteMapping
     @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
     public SuccessDto<ResponseEntity<String>> deleteMember(@RequestParam Long id) {
         memberService.deleteMember(id);
