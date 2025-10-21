@@ -30,7 +30,7 @@ public class CategoryController {
         );
     }
 
-    @PutMapping
+    @PatchMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<CategoryDto>> updateCategory(@Valid @RequestBody CategoryUpdateVm categoryUpdateVm) {
         return new SuccessDto<>(
