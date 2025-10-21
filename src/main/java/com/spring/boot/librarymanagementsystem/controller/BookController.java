@@ -30,7 +30,7 @@ public class BookController {
         );
     }
 
-    @PutMapping
+    @PatchMapping
     @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
     public SuccessDto<ResponseEntity<BookDto>> updateBook(@Valid @RequestBody BookRequestUpdateVm bookRequestUpdateVm) {
         return new SuccessDto<>(
