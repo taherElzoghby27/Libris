@@ -45,7 +45,7 @@ public class AuthorController {
         );
     }
 
-    @PutMapping
+    @PatchMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<AuthorDto>> updateAuthor(@Valid @RequestBody AuthorUpdateVm authorUpdateVm) {
         return new SuccessDto<>(
