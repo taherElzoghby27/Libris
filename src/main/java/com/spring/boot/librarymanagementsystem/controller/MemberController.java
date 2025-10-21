@@ -44,7 +44,7 @@ public class MemberController {
         );
     }
 
-    @PutMapping
+    @PatchMapping
     @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
     public SuccessDto<ResponseEntity<MemberDto>> updateMember(@Valid @RequestBody MemberRequestUpdateVm memberRequestUpdateVm) {
         return new SuccessDto<>(
