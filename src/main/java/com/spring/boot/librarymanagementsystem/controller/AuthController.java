@@ -58,7 +58,7 @@ public class AuthController {
         return new SuccessDto<>(ResponseEntity.ok(userService.getUserById(id)));
     }
 
-    @PutMapping("/user")
+    @PatchMapping("/user")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<UserSystemDto>> updateUser(@Valid @RequestBody UserUpdateVm updateVm) {
         return new SuccessDto<>(ResponseEntity.ok(userService.updateUserSystem(updateVm)));
@@ -71,7 +71,7 @@ public class AuthController {
         return new SuccessDto<>(ResponseEntity.ok("User deleted successfully"));
     }
 
-    @PutMapping("/roles")
+    @PatchMapping("/roles")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<UserSystemDto>> updateUserRoles(@RequestParam("user_id") Long userId,
                                                                      @RequestParam("roles_name") List<String> roleNames) {

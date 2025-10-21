@@ -18,7 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-@Builder
 public class UserSystem extends BaseEntity<String> {
     @Column(name = "username", unique = true, nullable = false)
     private String username;

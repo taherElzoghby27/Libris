@@ -11,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-@Builder
 public class UserSystemDto {
     private Long id;
     @NotEmpty(message = "username must be not empty")

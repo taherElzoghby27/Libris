@@ -112,7 +112,6 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("data must be different");
         }
         UserSystem userSystem = UserMapper.INSTANCE.toUserSystem(userSystemDto);
-        userSystem.setPassword(passwordEncoder.encode(userSystem.getPassword()));
         userSystem = userRepo.save(userSystem);
         return UserMapper.INSTANCE.toUserDto(userSystem);
     }
@@ -121,10 +120,6 @@ public class UserServiceImpl implements UserService {
         if (userUpdateVm.getUsername() != null && !userSystemDto.getUsername().equals(userUpdateVm.getUsername())) {
             update = true;
             userSystemDto.setUsername(userUpdateVm.getUsername());
-        }
-        if (userUpdateVm.getPassword() != null && !userSystemDto.getPassword().equals(userUpdateVm.getPassword())) {
-            update = true;
-            userSystemDto.setPassword(userUpdateVm.getPassword());
         }
         if (userUpdateVm.getEmail() != null && !userSystemDto.getEmail().equals(userUpdateVm.getEmail())) {
             update = true;
