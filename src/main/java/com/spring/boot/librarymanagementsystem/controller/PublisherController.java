@@ -51,7 +51,7 @@ public class PublisherController {
         );
     }
 
-    @PutMapping
+    @PatchMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<PublisherDto>> updatePublisher(@Valid @RequestBody PublisherUpdateVm publisherUpdateVm) {
         return new SuccessDto<>(
