@@ -65,7 +65,7 @@ public class BorrowingServiceImpl implements BorrowingService {
     @Transactional(propagation = Propagation.REQUIRED)
     protected void setRelations(BorrowingRequestVm vm, Borrowing borrowing) {
         // book
-        BookDto bookDto = bookService.getBook(vm.getBookId());
+        BookDto bookDto = bookService.getBookById(vm.getBookId());
         Book book = BookMapper.INSTANCE.toBook(bookDto);
         borrowing.setBook(book);
         // member
@@ -176,7 +176,7 @@ public class BorrowingServiceImpl implements BorrowingService {
             oldBorrowing.setBorrowingStatus(borrowingUpdateVm.getBorrowingStatus());
         }
         if (Objects.nonNull(borrowingUpdateVm.getBookId())) {
-            BookDto bookDto = bookService.getBook(borrowingUpdateVm.getBookId());
+            BookDto bookDto = bookService.getBookById(borrowingUpdateVm.getBookId());
             oldBorrowing.setBook(BookMapper.INSTANCE.toBook(bookDto));
             update = true;
         }

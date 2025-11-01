@@ -10,7 +10,7 @@ public interface BookService {
 
     BooksResponseVm getAllBooksWithoutData(int page, int size);
 
-    BookDto getBook(Long id);
+    BookDto getBookById(Long id);
 
     void deleteBook(Long id);
 

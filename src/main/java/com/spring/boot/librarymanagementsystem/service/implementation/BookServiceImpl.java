@@ -49,7 +49,7 @@ public class BookServiceImpl implements BookService {
         }
         Book book = BookMapper.INSTANCE.toBook(bookRequestVm);
         // set relations
-        setRelationsToBook(bookRequestVm, book);
+        setBookRelations(bookRequestVm, book);
         book = bookRepo.save(book);
         //add log
         activityUserService.addActivity(new ActivityRequestVm(
@@ -62,7 +62,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    protected void setRelationsToBook(BookRequestVm bookRequestVm, Book book) {
+    protected void setBookRelations(BookRequestVm bookRequestVm, Book book) {
         //get publisher
         PublisherDto publisherDto = publisherService.getPublisher(bookRequestVm.getPublisherId());
         Publisher publisher = PublisherMapper.INSTANCE.toPublisher(publisherDto);
@@ -94,7 +94,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto getBook(Long id) {
+    public BookDto getBookById(Long id) {
         if (Objects.isNull(id)) {
             throw new BadRequestException("id must be not null");
         }
@@ -112,7 +112,7 @@ public class BookServiceImpl implements BookService {
             throw new BadRequestException("id must be not null");
         }
         // ensure exists
-        BookDto bookDto = getBook(id);
+        BookDto bookDto = getBookById(id);
         bookRepo.deleteById(id);
         //add log
         activityUserService.addActivity(new ActivityRequestVm(
@@ -127,7 +127,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto updateBook(BookRequestUpdateVm bookRequestUpdateVm) {
         boolean update = false;
-        BookDto oldBookDto = getBook(bookRequestUpdateVm.getId());
+        BookDto oldBookDto = getBookById(bookRequestUpdateVm.getId());
         Book oldBook = BookMapper.INSTANCE.toBook(oldBookDto);
         update = updateData(bookRequestUpdateVm, oldBook, update);
         if (update) {

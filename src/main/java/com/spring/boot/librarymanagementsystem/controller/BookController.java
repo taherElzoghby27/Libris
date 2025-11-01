@@ -1,5 +1,4 @@
 package com.spring.boot.librarymanagementsystem.controller;
-
 import com.spring.boot.librarymanagementsystem.dto.BookDto;
 import com.spring.boot.librarymanagementsystem.dto.SuccessDto;
 import com.spring.boot.librarymanagementsystem.service.BookService;
@@ -24,9 +23,10 @@ public class BookController {
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
     public SuccessDto<ResponseEntity<BookDto>> addBook(@Valid @RequestBody BookRequestVm bookRequestVm) {
+        BookDto body = bookService.addBook(bookRequestVm);
         return new SuccessDto<>(
-                ResponseEntity.created(URI.create("create-book"))
-                        .body(bookService.addBook(bookRequestVm))
+                ResponseEntity.created(URI.create("/books/" + body.getId()))
+                        .body(body)
         );
     }
 
@@ -41,7 +41,7 @@ public class BookController {
     @GetMapping("/{id}")
     public SuccessDto<ResponseEntity<BookDto>> getBook(@PathVariable Long id) {
         return new SuccessDto<>(
-                ResponseEntity.ok(bookService.getBook(id))
+                ResponseEntity.ok(bookService.getBookById(id))
         );
     }
 
