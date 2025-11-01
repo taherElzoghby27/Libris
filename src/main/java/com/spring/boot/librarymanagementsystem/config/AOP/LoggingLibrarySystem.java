@@ -2,6 +2,7 @@ package com.spring.boot.librarymanagementsystem.config.AOP;
 
 import com.spring.boot.librarymanagementsystem.dto.AuthorDto;
 import com.spring.boot.librarymanagementsystem.dto.BookDto;
+import com.spring.boot.librarymanagementsystem.vm.user.UserResponseVm;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -42,6 +43,22 @@ public class LoggingLibrarySystem {
         System.out.println("Author Operation : " + signature.getMethod().getName());
         if (authorDto != null) {
             System.out.println("--> " + authorDto.getFirstName() + authorDto.getLastName() + ", " + authorDto.getBio());
+        }
+    }
+    //for auth logging
+    @AfterReturning(
+            pointcut = "execution(* com.spring.boot.librarymanagementsystem.service.implementation.AuthServiceImpl.*(..))",
+            returning = "result"
+    )
+    public void afterReturningAuth(JoinPoint joinPoint, Object result) {
+        UserResponseVm authResponseVm = null;
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        if (result instanceof UserResponseVm) {
+            authResponseVm = (UserResponseVm) result;
+        }
+        System.out.println("Auth Operation : " + signature.getMethod().getName());
+        if (authResponseVm != null) {
+            System.out.println("--> " + authResponseVm.getEmail() + ", " + authResponseVm.getUsername());
         }
     }
 }
