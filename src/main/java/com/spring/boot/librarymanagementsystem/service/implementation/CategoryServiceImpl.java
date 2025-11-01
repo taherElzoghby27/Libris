@@ -31,7 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = CategoryMapper.INSTANCE.toCategory(categoryRequestVm);
         CategoryDto parentDto = null;
         if (Objects.nonNull(categoryRequestVm.getParent()) && !Objects.equals(categoryRequestVm.getParent(), category.getId())) {
-            parentDto = getCategory(categoryRequestVm.getParent());
+            parentDto = getCategoryWithId(categoryRequestVm.getParent());
             Category parent = CategoryMapper.INSTANCE.toCategory(parentDto);
             category.setParent(parent);
         }
@@ -42,7 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto updateCategory(CategoryUpdateVm categoryUpdateVm) {
         boolean update = false;
-        CategoryDto oldCategoryDto = getCategory(categoryUpdateVm.getId());
+        CategoryDto oldCategoryDto = getCategoryWithId(categoryUpdateVm.getId());
         update = updateData(categoryUpdateVm, oldCategoryDto, update);
         if (update) {
             Category category = CategoryMapper.INSTANCE.toCategory(oldCategoryDto);
@@ -61,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService {
             (Objects.nonNull(categoryUpdateVm.getParent()) &&
              !oldCategoryDto.getParent().getId().equals(categoryUpdateVm.getParent()))) {
             update = true;
-            CategoryDto parent = getCategory(categoryUpdateVm.getParent());
+            CategoryDto parent = getCategoryWithId(categoryUpdateVm.getParent());
             oldCategoryDto.setParent(parent);
         }
         return update;
@@ -73,12 +73,12 @@ public class CategoryServiceImpl implements CategoryService {
         if (Objects.isNull(id)) {
             throw new BadRequestException("id must be not null");
         }
-        getCategory(id);
+        getCategoryWithId(id);
         categoryRepo.deleteById(id);
     }
 
     @Override
-    public CategoryDto getCategory(Long id) {
+    public CategoryDto getCategoryWithId(Long id) {
         if (Objects.isNull(id)) {
             throw new BadRequestException("id must be not null");
         }

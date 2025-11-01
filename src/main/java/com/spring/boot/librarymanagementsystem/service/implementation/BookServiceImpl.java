@@ -68,7 +68,7 @@ public class BookServiceImpl implements BookService {
         Publisher publisher = PublisherMapper.INSTANCE.toPublisher(publisherDto);
         book.setPublisher(publisher);
         //get category
-        CategoryDto categoryDto = categoryService.getCategory(bookRequestVm.getCategoryId());
+        CategoryDto categoryDto = categoryService.getCategoryWithId(bookRequestVm.getCategoryId());
         Category category = CategoryMapper.INSTANCE.toCategory(categoryDto);
         book.setCategory(category);
         //get authors

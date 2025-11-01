@@ -3,6 +3,7 @@ package com.spring.boot.librarymanagementsystem.config.AOP;
 import com.spring.boot.librarymanagementsystem.dto.AuthorDto;
 import com.spring.boot.librarymanagementsystem.dto.BookDto;
 import com.spring.boot.librarymanagementsystem.dto.BorrowingDto;
+import com.spring.boot.librarymanagementsystem.dto.CategoryDto;
 import com.spring.boot.librarymanagementsystem.vm.user.UserResponseVm;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -79,6 +80,23 @@ public class LoggingLibrarySystem {
         if (borrowingDto != null) {
             System.out.println("--> " + borrowingDto.getBook().getTitle() + ", issued by : " + borrowingDto.getIssuedByUser().getUsername());
             System.out.println("--> returned by : " + borrowingDto.getReturnedByUser().getUsername() + ", member : " + borrowingDto.getMember().getFullName());
+        }
+    }
+    //for category logging (add, remove, update)
+    @AfterReturning(
+            pointcut = "execution(* com.spring.boot.librarymanagementsystem.service.implementation.CategoryServiceImpl.*Category(..))",
+            returning = "result"
+    )
+    public void afterReturningCategory(JoinPoint joinPoint, Object result) {
+        CategoryDto categoryDto = null;
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        if (result instanceof CategoryDto) {
+            categoryDto = (CategoryDto) result;
+        }
+        System.out.println("Category Operation : " + signature.getMethod().getName());
+        if (categoryDto != null) {
+            System.out.println("--> category name : " + categoryDto.getName());
+            System.out.println("--> category parent : " + categoryDto.getParent().getName());
         }
     }
 }

@@ -24,9 +24,10 @@ public class CategoryController {
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<CategoryDto>> addCategory(@Valid @RequestBody CategoryRequestVm categoryRequestVm) {
+        CategoryDto category = categoryService.createCategory(categoryRequestVm);
         return new SuccessDto<>(
-                ResponseEntity.created(URI.create("create-category")).
-                        body(categoryService.createCategory(categoryRequestVm))
+                ResponseEntity.created(URI.create("/categories/" + category.getId())).
+                        body(category)
         );
     }
 
@@ -50,7 +51,7 @@ public class CategoryController {
     @GetMapping("/{id}")
     public SuccessDto<ResponseEntity<CategoryDto>> getCategory(@PathVariable Long id) {
         return new SuccessDto<>(
-                ResponseEntity.ok(categoryService.getCategory(id))
+                ResponseEntity.ok(categoryService.getCategoryWithId(id))
         );
     }
 
