@@ -75,7 +75,7 @@ public class BookServiceImpl implements BookService {
         if (bookRequestVm.getAuthorsId().isEmpty()) {
             throw new BadRequestException("authors id must be not empty");
         }
-        List<AuthorDto> authorsDto = bookRequestVm.getAuthorsId().stream().map(authorService::getAuthor).toList();
+        List<AuthorDto> authorsDto = bookRequestVm.getAuthorsId().stream().map(authorService::getAuthorById).toList();
         List<Author> authors = authorsDto.stream().map(AuthorMapper.INSTANCE::toAuthor).toList();
         book.setAuthors(authors);
     }

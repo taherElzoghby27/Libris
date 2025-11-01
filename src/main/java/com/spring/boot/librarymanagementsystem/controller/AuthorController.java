@@ -23,9 +23,10 @@ public class AuthorController {
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<AuthorDto>> addAuthor(@Valid @RequestBody AuthorDto authorDto) {
+        AuthorDto author = authorService.createAuthor(authorDto);
         return new SuccessDto<>(
-                ResponseEntity.created(URI.create("create-author")).
-                        body(authorService.createAuthor(authorDto))
+                ResponseEntity.created(URI.create("/authors/" + author.getId())).
+                        body(author)
         );
     }
 
@@ -33,7 +34,7 @@ public class AuthorController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     public SuccessDto<ResponseEntity<AuthorDto>> getAuthor(@PathVariable Long authorId) {
         return new SuccessDto<>(
-                ResponseEntity.ok(authorService.getAuthor(authorId))
+                ResponseEntity.ok(authorService.getAuthorById(authorId))
         );
     }
 

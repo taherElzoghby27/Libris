@@ -7,7 +7,7 @@ import com.spring.boot.librarymanagementsystem.vm.author.AuthorUpdateVm;
 public interface AuthorService {
     AuthorResponseVm getAuthors(int page, int size);
 
-    AuthorDto getAuthor(Long id);
+    AuthorDto getAuthorById(Long id);
 
     AuthorDto createAuthor(AuthorDto authorDto);
 

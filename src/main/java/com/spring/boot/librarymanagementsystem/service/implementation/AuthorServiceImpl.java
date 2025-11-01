@@ -37,7 +37,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorDto getAuthor(Long id) {
+    public AuthorDto getAuthorById(Long id) {
         if (Objects.isNull(id)) {
             throw new BadRequestException("id must be not null");
         }
@@ -61,7 +61,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public AuthorDto updateAuthor(AuthorUpdateVm authorUpdateVm) {
         boolean update = false;
-        AuthorDto oldAuthorDto = getAuthor(authorUpdateVm.getId());
+        AuthorDto oldAuthorDto = getAuthorById(authorUpdateVm.getId());
         update = updateData(authorUpdateVm, oldAuthorDto, update);
         if (update) {
             Author author = AuthorMapper.INSTANCE.toAuthor(oldAuthorDto);
@@ -92,7 +92,7 @@ public class AuthorServiceImpl implements AuthorService {
         if (Objects.isNull(id)) {
             throw new BadRequestException("id must be not null");
         }
-        getAuthor(id);
+        getAuthorById(id);
         authorRepo.deleteById(id);
     }
 }
