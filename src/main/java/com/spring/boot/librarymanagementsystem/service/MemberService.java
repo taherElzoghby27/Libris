@@ -10,7 +10,7 @@ public interface MemberService {
 
     MembersResponseVm getMembers(int page, int size);
 
-    MemberDto getMember(Long id);
+    MemberDto getMemberWithId(Long id);
 
     void deleteMember(Long id);
 

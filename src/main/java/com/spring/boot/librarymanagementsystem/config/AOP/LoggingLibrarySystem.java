@@ -1,9 +1,6 @@
 package com.spring.boot.librarymanagementsystem.config.AOP;
 
-import com.spring.boot.librarymanagementsystem.dto.AuthorDto;
-import com.spring.boot.librarymanagementsystem.dto.BookDto;
-import com.spring.boot.librarymanagementsystem.dto.BorrowingDto;
-import com.spring.boot.librarymanagementsystem.dto.CategoryDto;
+import com.spring.boot.librarymanagementsystem.dto.*;
 import com.spring.boot.librarymanagementsystem.vm.user.UserResponseVm;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -82,6 +79,7 @@ public class LoggingLibrarySystem {
             System.out.println("--> returned by : " + borrowingDto.getReturnedByUser().getUsername() + ", member : " + borrowingDto.getMember().getFullName());
         }
     }
+
     //for category logging (add, remove, update)
     @AfterReturning(
             pointcut = "execution(* com.spring.boot.librarymanagementsystem.service.implementation.CategoryServiceImpl.*Category(..))",
@@ -97,6 +95,24 @@ public class LoggingLibrarySystem {
         if (categoryDto != null) {
             System.out.println("--> category name : " + categoryDto.getName());
             System.out.println("--> category parent : " + categoryDto.getParent().getName());
+        }
+    }
+
+    //for member logging (add, remove, update)
+    @AfterReturning(
+            pointcut = "execution(* com.spring.boot.librarymanagementsystem.service.implementation.MemberServiceImpl.*Member(..))",
+            returning = "result"
+    )
+    public void afterReturningMember(JoinPoint joinPoint, Object result) {
+        MemberDto memberDto = null;
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        if (result instanceof MemberDto) {
+            memberDto = (MemberDto) result;
+        }
+        System.out.println("Member Operation : " + signature.getMethod().getName());
+        if (memberDto != null) {
+            System.out.println("--> member name : " + memberDto.getFullName());
+            System.out.println("--> member address : " + memberDto.getAddress());
         }
     }
 }

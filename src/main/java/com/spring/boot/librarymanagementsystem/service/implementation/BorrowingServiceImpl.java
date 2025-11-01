@@ -69,7 +69,7 @@ public class BorrowingServiceImpl implements BorrowingService {
         Book book = BookMapper.INSTANCE.toBook(bookDto);
         borrowing.setBook(book);
         // member
-        MemberDto memberDto = memberService.getMember(vm.getMember());
+        MemberDto memberDto = memberService.getMemberWithId(vm.getMember());
         Member member = MemberMapper.INSTANCE.toMember(memberDto);
         borrowing.setMember(member);
         // issued by user

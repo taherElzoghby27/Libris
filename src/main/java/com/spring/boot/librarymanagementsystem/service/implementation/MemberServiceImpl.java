@@ -50,7 +50,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberDto getMember(Long id) {
+    public MemberDto getMemberWithId(Long id) {
         if (Objects.isNull(id)) {
             throw new BadRequestException("id must be not null");
         }
@@ -68,13 +68,13 @@ public class MemberServiceImpl implements MemberService {
             throw new BadRequestException("id must be not null");
         }
         // ensure exists
-        getMember(id);
+        getMemberWithId(id);
         memberRepo.deleteById(id);
     }
 
     @Override
     public MemberDto updateMember(MemberRequestUpdateVm memberRequestUpdateVm) {
-        MemberDto oldMemberDto = getMember(memberRequestUpdateVm.getId());
+        MemberDto oldMemberDto = getMemberWithId(memberRequestUpdateVm.getId());
         Member oldMember = MemberMapper.INSTANCE.toMember(oldMemberDto);
         boolean update = false;
         update = updateData(memberRequestUpdateVm, oldMember, update);
