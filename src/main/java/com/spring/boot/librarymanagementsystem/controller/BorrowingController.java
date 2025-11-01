@@ -10,7 +10,6 @@ import com.spring.boot.librarymanagementsystem.vm.borrowing.BorrowingsResponseVm
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -24,9 +23,10 @@ public class BorrowingController {
 
     @PostMapping
     public SuccessDto<ResponseEntity<BorrowingDto>> addBorrowing(@Valid @RequestBody BorrowingRequestVm vm) {
+        BorrowingDto body = borrowingService.addBorrowing(vm);
         return new SuccessDto<>(
-                ResponseEntity.created(URI.create("create-borrowing"))
-                        .body(borrowingService.addBorrowing(vm))
+                ResponseEntity.created(URI.create("/borrowings/" + body.getId()))
+                        .body(body)
         );
     }
 
@@ -54,7 +54,7 @@ public class BorrowingController {
     @GetMapping
     public SuccessDto<ResponseEntity<BorrowingsResponseVm>> getAllBorrowings(@RequestParam int page, @RequestParam int size) {
         return new SuccessDto<>(
-                ResponseEntity.ok(borrowingService.getAllBorrowings(page, size))
+                ResponseEntity.ok(borrowingService.getAllBorrowingsWithData(page, size))
         );
     }
 

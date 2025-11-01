@@ -13,7 +13,7 @@ public interface BorrowingService {
 
     BorrowingDto getBorrowingWithData(Long id);
 
-    BorrowingsResponseVm getAllBorrowings(int page, int size);
+    BorrowingsResponseVm getAllBorrowingsWithData(int page, int size);
 
     BorrowingDto updateBorrowing(BorrowingUpdateVm borrowingUpdateVm);
 

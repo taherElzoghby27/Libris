@@ -118,7 +118,7 @@ public class BorrowingServiceImpl implements BorrowingService {
     }
 
     @Override
-    public BorrowingsResponseVm getAllBorrowings(int page, int size) {
+    public BorrowingsResponseVm getAllBorrowingsWithData(int page, int size) {
         Pageable pageable = PaginationService.getPageable(page, size);
         Page<Borrowing> result = borrowingRepo.findAll(pageable);
         if (result.isEmpty()) {
