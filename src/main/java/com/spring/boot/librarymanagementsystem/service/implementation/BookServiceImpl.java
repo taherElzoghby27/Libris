@@ -64,7 +64,7 @@ public class BookServiceImpl implements BookService {
     @Transactional(propagation = Propagation.REQUIRED)
     protected void setBookRelations(BookRequestVm bookRequestVm, Book book) {
         //get publisher
-        PublisherDto publisherDto = publisherService.getPublisher(bookRequestVm.getPublisherId());
+        PublisherDto publisherDto = publisherService.getPublisherWithId(bookRequestVm.getPublisherId());
         Publisher publisher = PublisherMapper.INSTANCE.toPublisher(publisherDto);
         book.setPublisher(publisher);
         //get category

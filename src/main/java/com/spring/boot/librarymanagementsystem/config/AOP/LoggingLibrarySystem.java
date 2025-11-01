@@ -115,4 +115,21 @@ public class LoggingLibrarySystem {
             System.out.println("--> member address : " + memberDto.getAddress());
         }
     }
+    //for publisher logging (add, remove, update)
+    @AfterReturning(
+            pointcut = "execution(* com.spring.boot.librarymanagementsystem.service.implementation.PublisherServiceImpl.*Publisher(..))",
+            returning = "result"
+    )
+    public void afterReturningPublisher(JoinPoint joinPoint, Object result) {
+        PublisherDto publisherDto = null;
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        if (result instanceof PublisherDto) {
+            publisherDto = (PublisherDto) result;
+        }
+        System.out.println("Publisher Operation : " + signature.getMethod().getName());
+        if (publisherDto != null) {
+            System.out.println("--> publisher name : " + publisherDto.getName());
+            System.out.println("--> publisher address : " + publisherDto.getAddress());
+        }
+    }
 }

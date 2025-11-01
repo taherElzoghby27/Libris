@@ -55,14 +55,14 @@ public class PublisherServiceImpl implements PublisherService {
         if (Objects.isNull(id)) {
             throw new BadRequestException("id must be not null");
         }
-        getPublisher(id);
+        getPublisherWithId(id);
         publisherRepo.deleteById(id);
     }
 
     @Override
     public PublisherDto updatePublisher(PublisherUpdateVm publisherUpdateVm) {
         boolean update = false;
-        PublisherDto oldPublisherDto = getPublisher(publisherUpdateVm.getId());
+        PublisherDto oldPublisherDto = getPublisherWithId(publisherUpdateVm.getId());
         update = updateData(publisherUpdateVm, oldPublisherDto, update);
         if (update) {
             Publisher publisher = PublisherMapper.INSTANCE.toPublisher(oldPublisherDto);
@@ -97,7 +97,7 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public PublisherDto getPublisher(Long id) {
+    public PublisherDto getPublisherWithId(Long id) {
         if (Objects.isNull(id)) {
             throw new BadRequestException("id must be not null");
         }

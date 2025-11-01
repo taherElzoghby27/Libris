@@ -16,5 +16,5 @@ public interface PublisherService {
 
     PublisherResponseVm getPublisherWithBooks(Long id);
 
-    PublisherDto getPublisher(Long id);
+    PublisherDto getPublisherWithId(Long id);
 }
